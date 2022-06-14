@@ -58,8 +58,7 @@ class AddFragment : Fragment() {
             val newData = ToDoData(
                 0,
                 mTitle,
-                mSharedViewModel.parsePriority(mPriority),
-                mDescription
+                mSharedViewModel.parsePriority(mPriority),mDescription
             )
             mToDoViewModel.insertData(newData)
             Toast.makeText(requireContext(), "Successfully added!", Toast.LENGTH_SHORT).show()
