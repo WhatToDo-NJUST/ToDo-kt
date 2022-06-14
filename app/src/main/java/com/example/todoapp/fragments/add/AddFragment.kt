@@ -51,6 +51,7 @@ class AddFragment : Fragment() {
         val mTitle = binding.titleEt.text.toString()
         val mPriority = binding.prioritiesSpinner.selectedItem.toString()
         val mDescription = binding.descriptionEt.text.toString()
+        val mTime=binding.timeEt.text.toString()
 
         val validation = mSharedViewModel.verifyDataFromUser(mTitle, mDescription)
         if(validation){
@@ -58,7 +59,8 @@ class AddFragment : Fragment() {
             val newData = ToDoData(
                 0,
                 mTitle,
-                mSharedViewModel.parsePriority(mPriority),mDescription
+                mSharedViewModel.parsePriority(mPriority),mDescription,mTime
+
             )
             mToDoViewModel.insertData(newData)
             Toast.makeText(requireContext(), "Successfully added!", Toast.LENGTH_SHORT).show()
