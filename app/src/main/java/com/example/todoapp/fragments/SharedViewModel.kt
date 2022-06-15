@@ -10,8 +10,13 @@ import androidx.lifecycle.MutableLiveData
 import com.example.todoapp.R
 import com.example.todoapp.data.models.Priority
 import com.example.todoapp.data.models.ToDoData
+import java.time.LocalDate
 
 class SharedViewModel(application: Application): AndroidViewModel(application) {
+
+    fun getCurrentData():LocalDate{
+        return LocalDate.now()
+    }
 
     /** ============================= List Fragment ============================= */
 
