@@ -9,9 +9,14 @@ import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.toolbox.JsonArrayRequest
+import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import com.example.todoapp.R
 import com.example.todoapp.data.models.ToDoData
 import com.example.todoapp.data.viewmodel.ToDoViewModel
@@ -21,6 +26,8 @@ import com.example.todoapp.fragments.list.adapter.ListAdapter
 import com.example.todoapp.utils.hideKeyboard
 import com.example.todoapp.utils.observeOnce
 import com.google.android.material.snackbar.Snackbar
+import org.json.JSONArray
+import org.json.JSONObject
 
 class ListFragment : Fragment(), SearchView.OnQueryTextListener {
 
@@ -47,17 +54,42 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
         setupRecyclerview()
 
         // Observe LiveData
-        mToDoViewModel.getAllData.observe(viewLifecycleOwner, { data ->
+        mToDoViewModel.getAllData.observe(viewLifecycleOwner) { data ->
             mSharedViewModel.checkIfDatabaseEmpty(data)
             adapter.setData(data)
             binding.recyclerView.scheduleLayoutAnimation()
-        })
+        }
 
         // Set Menu
         setHasOptionsMenu(true)
 
         // Hide soft keyboard
         hideKeyboard(requireActivity())
+
+        val queue = Volley.newRequestQueue(context)
+        val url = "http://10.0.2.2:8082/server_Web_exploded/user/allUser"
+
+        // Request a string response from the provided URL.
+//        val stringRequest = StringRequest(
+//            Request.Method.GET, url,
+//            Response.Listener<String> { response ->
+//                // Display the first 500 characters of the response string.
+//                Log.d("GET",response)
+//            },
+//            Response.ErrorListener { Log.d("GET","error")})
+//
+//        // Add the request to the RequestQueue.
+//        queue.add(stringRequest)
+
+        val stringRequest =JsonArrayRequest(Request.Method.GET,url,null,
+        Response.Listener<JSONArray>{
+            response ->  Log.d("GET",response.toString())
+        },Response.ErrorListener { error -> Log.d("GET",error.toString())  })
+
+        // Add the request to the RequestQueue.
+        queue.add(stringRequest)
+
+
 
         return binding.root
     }

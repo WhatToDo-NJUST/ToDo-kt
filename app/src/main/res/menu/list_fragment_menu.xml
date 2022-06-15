@@ -10,7 +10,7 @@
         app:showAsAction="ifRoom"
         app:actionViewClass="androidx.appcompat.widget.SearchView"/>
 
-    <group android:checkableBehavior="single">
+    <group android:checkableBehavior="none">
         <item
             android:id="@+id/menu_sortBy"
             android:title="@string/sort_by">
@@ -21,6 +21,24 @@
                 <item
                     android:id="@+id/menu_priority_low"
                     android:title="@string/priority_low"/>
+            </menu>
+        </item>
+    </group>
+
+    <group android:checkableBehavior="none">
+        <item
+            android:id="@+id/menu_network"
+            android:title="@string/network">
+            <menu>
+                <item
+                    android:id="@+id/menu_download_plan"
+                    android:title="@string/download_plan"/>
+                <item
+                    android:id="@+id/menu_upload_plan"
+                    android:title="@string/upload_plan"/>
+                <item
+                    android:id="@+id/menu_share_plan"
+                    android:title="@string/share_plan"/>
             </menu>
         </item>
     </group>

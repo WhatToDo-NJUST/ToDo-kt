@@ -14,6 +14,10 @@
     <string name="save">Save</string>
     <string name="delete">Delete</string>
     <string name="time">time</string>
+    <string name="network">network</string>
+    <string name="download_plan">download</string>
+    <string name="upload_plan">upload</string>
+    <string name="share_plan">share</string>
 
     <string-array name="priorities">
         <item>High Priority</item>
