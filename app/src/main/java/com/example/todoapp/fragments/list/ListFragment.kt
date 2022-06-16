@@ -140,6 +140,10 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
         })
     }
 
+    private fun countDown() {
+
+    }
+
     // Show AlertDialog to Confirm Removal of All Items from Database Table
     private fun confirmRemoval() {
         val builder = AlertDialog.Builder(requireContext())
