@@ -51,11 +51,6 @@ class AddFragment : Fragment() {
 
         // 绑定时间选择器
         binding.timePicker.setOnTimeChangedListener { view, hourOfDay, minute ->
-//            Toast.makeText(
-//                context,
-//                "您选择的时间是：" + hourOfDay + "时" + minute + "分!",
-//                Toast.LENGTH_SHORT
-//            ).show()
             binding.timeEt.setText("$hourOfDay:$minute")
         }
     }
@@ -76,16 +71,21 @@ class AddFragment : Fragment() {
         val mPriority = binding.prioritiesSpinner.selectedItem.toString()
         val mDescription = binding.descriptionEt.text.toString()
         val mTime = binding.timeEt.text.toString()
+        val userId=""
+        val isDone=false
 
         val validation = mSharedViewModel.verifyDataFromUser(mTitle, mDescription)
         if (validation) {
             // Insert Data to Database
             val newData = ToDoData(
-                0,
+                "0",
+                userId,
                 mTitle,
                 mSharedViewModel.parsePriority(mPriority),
+//                mPriority,
+                mDescription,
+                isDone,
                 mTime,
-                mDescription
             )
             mToDoViewModel.insertData(newData)
             Toast.makeText(requireContext(), "Successfully added!", Toast.LENGTH_SHORT).show()
