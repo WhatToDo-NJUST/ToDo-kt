@@ -1,6 +1,5 @@
 package com.example.todoapp.fragments.list
 
-import android.R.id.message
 import android.app.AlertDialog
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
@@ -15,7 +14,6 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.todoapp.R
-import com.example.todoapp.data.models.Test
 import com.example.todoapp.data.models.ToDoData
 import com.example.todoapp.data.viewmodel.ToDoViewModel
 import com.example.todoapp.databinding.FragmentListBinding
@@ -25,14 +23,19 @@ import com.example.todoapp.utils.hideKeyboard
 import com.example.todoapp.utils.observeOnce
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import okhttp3.Call
-import okhttp3.Callback
-import okhttp3.FormBody
-import okhttp3.OkHttpClient
+import com.google.gson.JsonArray
+import com.google.gson.JsonObject
+import okhttp3.*
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okio.IOException
+import org.json.JSONArray
 import org.json.JSONObject
 import java.util.*
+<<<<<<< Updated upstream
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
+=======
+>>>>>>> Stashed changes
 
 
 class ListFragment : Fragment(), SearchView.OnQueryTextListener {
@@ -53,7 +56,7 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
 
         // Data binding
         _binding = FragmentListBinding.inflate(inflater, container, false)
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.mSharedViewModel = mSharedViewModel
 
         // Setup RecyclerView
@@ -71,11 +74,6 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
 
         // Hide soft keyboard
         hideKeyboard(requireActivity())
-
-        login()
-//        downloadPlan()
-
-
 
         return binding.root
     }
@@ -130,156 +128,17 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
             R.id.menu_delete_all -> confirmRemoval()
             R.id.menu_priority_high -> mToDoViewModel.sortByHighPriority.observe(viewLifecycleOwner, { adapter.setData(it) })
             R.id.menu_priority_low -> mToDoViewModel.sortByLowPriority.observe(viewLifecycleOwner, { adapter.setData(it) })
-            R.id.menu_download_plan->downloadPlan()
+            R.id.menu_download_plan->download()
+            R.id.menu_upload_plan->upload()
+<<<<<<< Updated upstream
+            R.id.menu_login->login()
+=======
+>>>>>>> Stashed changes
         }
         return super.onOptionsItemSelected(item)
     }
 
-    fun login(){
-        val url = "http://10.0.2.2:10001//user/login"
 
-        val requestBody = FormBody.Builder()
-            .add("phone", "13750794329")
-            .add("password", "123456")
-            .build()
-
-        //创建request请求对象
-        val request = okhttp3.Request.Builder()
-            .url(url)
-            .post(requestBody)
-            .build()
-
-        //创建call并调用enqueue()方法实现网络请求
-
-        var flag:Boolean=false
-        var res:String="res"
-        OkHttpClient().newCall(request)
-            .enqueue(object : Callback {
-                override fun onFailure(call: Call, e: IOException) {
-                }
-
-                override fun onResponse(call: Call, response: okhttp3.Response) {
-                    res= response.body.string()
-//                    Log.d("DATA", result.toString())
-
-                    flag=true
-                }
-            })
-
-        while(!flag){}
-        val jsonObject=JSONObject(res)
-        val data=jsonObject.getJSONObject("data")
-        Log.d("DATA", data.getString("token"))
-
-        val sharedPreferences:SharedPreferences= (context?.getSharedPreferences("data",MODE_PRIVATE) ?:null) as SharedPreferences
-        val editor:SharedPreferences.Editor=sharedPreferences.edit()
-        editor.putString("token",data.getString("token"))
-        editor.apply()
-
-    }
-
-    fun downloadPlan(){
-        val url = "http://10.0.2.2:10001//todo/download"
-        var shp = context?.getSharedPreferences("data", MODE_PRIVATE)
-        var token: String? = shp?.getString("token","")
-
-//        Log.d("DATA",token.toString())
-
-//        val requestBody = FormBody.Builder()
-//            .add("token", token.toString())
-//            .build()
-
-        //创建request请求对象
-        val request = okhttp3.Request.Builder()
-            .url(url)
-            .addHeader("token",token.toString())
-            .build()
-
-        //创建call并调用enqueue()方法实现网络请求
-
-        var flag=false
-        var res="res"
-        OkHttpClient().newCall(request)
-            .enqueue(object : Callback {
-                override fun onFailure(call: Call, e: IOException) {
-                }
-
-                override fun onResponse(call: Call, response: okhttp3.Response) {
-                    res= response.body.string()
-//                    Log.d("DATA", result.toString())
-
-                    flag=true
-                }
-            })
-
-        while(!flag){}
-        val jsonObject=JSONObject(res)
-        val data=jsonObject.getJSONArray("data")
-        Log.d("DATA",res)
-
-//        var lists = jsonToList<Test>(data.toString())
-        var lists =stringToArray(data.toString(),Array<Test>::class.java)
-        Log.d("DATA",lists.size.toString())
-        for(i in lists.indices){
-            Log.d("DATA",lists[i].size.toString())
-            Log.d("DATA",lists[i].get(0).toString())
-        }
-
-
-
-
-    }
-
-    fun <T> jsonToList(jsonList: String): List<T> {
-        return Gson().fromJson(jsonList, object : TypeToken<ArrayList<T>>() {}.type)
-    }
-
-    fun <T> stringToArray(s: String?, clazz: Class<Array<T>>?): List<Array<T>> {
-        val arr = Gson().fromJson(s, clazz)
-        return listOf(arr) //or return Arrays.asList(new Gson().fromJson(s, clazz)); for a one-liner
-    }
-
-    fun uploadPlan(){
-        val url = "http://10.0.2.2:10001//todo/upload"
-        var shp = context?.getSharedPreferences("data", MODE_PRIVATE)
-        var token: String? = shp?.getString("token","")
-
-//        Log.d("DATA",token.toString())
-
-        val requestBody = FormBody.Builder()
-            .add("token", token.toString())
-            .build()
-
-        //创建request请求对象
-        val request = okhttp3.Request.Builder()
-            .url(url)
-            .addHeader("token",token.toString())
-            .post(requestBody)
-            .build()
-
-        //创建call并调用enqueue()方法实现网络请求
-
-        var flag=false
-        var res="res"
-        OkHttpClient().newCall(request)
-            .enqueue(object : Callback {
-                override fun onFailure(call: Call, e: IOException) {
-                }
-
-                override fun onResponse(call: Call, response: okhttp3.Response) {
-                    res= response.body.string()
-//                    Log.d("DATA", result.toString())
-
-                    flag=true
-                }
-            })
-
-        while(!flag){}
-        val jsonObject=JSONObject(res)
-        val data=jsonObject.getJSONArray("data")
-        Log.d("DATA",data.toString())
-
-    }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
         if (query != null) {
@@ -308,23 +167,185 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
 
     // Show AlertDialog to Confirm Removal of All Items from Database Table
     private fun confirmRemoval() {
+        val builder=makeAlertDialog("Successfully Removed Everything!","Delete everything?",
+            "Are you sure you want to remove everything?"
+        ) { mToDoViewModel.deleteAll() }
+        builder.create().show()
+    }
+
+    private fun makeAlertDialog(yesMessage:String,title:String,message:String,
+    function:()-> Unit):AlertDialog.Builder{
         val builder = AlertDialog.Builder(requireContext())
         builder.setPositiveButton("Yes") { _, _ ->
-            mToDoViewModel.deleteAll()
+            function()
             Toast.makeText(
                 requireContext(),
-                "Successfully Removed Everything!",
+                yesMessage,
                 Toast.LENGTH_SHORT
             ).show()
         }
         builder.setNegativeButton("No") { _, _ -> }
-        builder.setTitle("Delete everything?")
-        builder.setMessage("Are you sure you want to remove everything?")
+        builder.setTitle(title)
+        builder.setMessage(message)
+        return builder
+    }
+
+    private fun makeRequest(request: Request):String{
+        var flag=false
+        var res="res"
+        OkHttpClient().newCall(request)
+            .enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                    flag=true
+                }
+
+                override fun onResponse(call: Call, response:Response) {
+                    res= response.body.string()
+                    flag=true
+                }
+            })
+
+
+        while(!flag){}
+        return res
+    }
+
+    private fun login(){
+        val url = "http://10.0.2.2:10001//user/login"
+
+        val requestBody = FormBody.Builder()
+            .add("phone", "13750794329")
+            .add("password", "123456")
+            .build()
+
+        //创建request请求对象
+        val request = Request.Builder()
+            .url(url)
+            .post(requestBody)
+            .build()
+
+        val res=makeRequest(request)
+        val jsonObject=JSONObject(res)
+        val data=jsonObject.getJSONObject("data")
+        val sharedPreferences:SharedPreferences= (context?.getSharedPreferences("data",MODE_PRIVATE) ?:null) as SharedPreferences
+        val editor:SharedPreferences.Editor=sharedPreferences.edit()
+        editor.putString("token",data.getString("token"))
+        editor.apply()
+
+    }
+
+    private fun download(){
+        val builder=makeAlertDialog("Successfully download data!","Download Data",
+            "Are you sure you want to download data?"
+        ) { downloadPlan() }
         builder.create().show()
+    }
+
+    private fun downloadPlan(){
+        val url = "http://10.0.2.2:10001//todo/download"
+        var shp = context?.getSharedPreferences("data", MODE_PRIVATE)
+        var token: String? = shp?.getString("token","")
+        //创建request请求对象
+        val request = Request.Builder()
+            .url(url)
+            .addHeader("token",token.toString())
+            .build()
+
+        val res=makeRequest(request)
+
+
+        val jsonObject=JSONObject(res)
+        val data=jsonObject.getJSONArray("data")
+
+        val lists=stringToArray(data.toString(), Array<ToDoData>::class.java)
+
+        lists?.let { adapter.setData(it) }
+
+    }
+
+<<<<<<< Updated upstream
+    
+    fun upload(){
+=======
+
+
+
+    private fun upload(){
+>>>>>>> Stashed changes
+        val builder=makeAlertDialog("Successfully upload data!","Upload Data",
+            "Are you sure you want to upload data?"
+        ) { uploadPlan() }
+        builder.create().show()
+    }
+
+    private fun uploadPlan(){
+        val url = "http://10.0.2.2:10001//todo/upload"
+        var shp = context?.getSharedPreferences("data", MODE_PRIVATE)
+        var token: String? = shp?.getString("token","")
+
+<<<<<<< Updated upstream
+        val jsonArray=JsonArray()
+        val lists=mToDoViewModel.getAllData.value
+
+        for(i in lists?.indices!!){
+            val jo=JsonObject()
+            jo.addProperty("id",lists[i].id)
+            jo.addProperty("userId",lists[i].userId)
+            jo.addProperty("title",lists[i].title)
+            jo.addProperty("priority",lists[i].priority.toString())
+            jo.addProperty("description",lists[i].description)
+            jo.addProperty("isDone",lists[i].isDone.toString())
+            jo.addProperty("registerTime",lists[i].registerTime)
+//            jo.addProperty("registerTime","2022-12-12 12:12:12")
+            jsonArray.add(jo)
+        }
+=======
+        var datas= mutableListOf<ToDoData>()
+
+        var lists=mToDoViewModel.getAllData.value
+        for(i in lists?.indices!!)
+        datas= datas.plusElement(lists[i]) as MutableList<ToDoData>
+//
+        val uploadData=JSONArray(datas)
+        Log.d("DATA",datas.toString())
+
+        val requestBody = FormBody.Builder()
+            .add("todos", uploadData.toString())
+            .build()
+>>>>>>> Stashed changes
+
+        val mediaType = "application/json; charset=utf-8".toMediaTypeOrNull()
+        val requestBody = jsonArray.toString().toRequestBody(mediaType)
+        //创建request请求对象
+        val request = Request.Builder()
+            .url(url)
+            .addHeader("token",token.toString())
+            .post(requestBody)
+            .build()
+
+        //创建call并调用enqueue()方法实现网络请求
+
+        val res=makeRequest(request)
+<<<<<<< Updated upstream
+    }
+
+=======
+//        val jsonObject=JSONObject(res)
+//        val data=jsonObject.getJSONArray("data")
+        Log.d("DATA",res)
+    }
+
+//    json字符串转类数组
+>>>>>>> Stashed changes
+    fun <T> stringToArray(s: String?, clazz: Class<Array<T>>?): List<T>? {
+        val arr = Gson().fromJson(s, clazz)
+        return listOf(*arr)//or return Arrays.asList(new Gson().fromJson(s, clazz)); for a one-liner
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
+
 }
