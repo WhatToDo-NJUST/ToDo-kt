@@ -1,6 +1,5 @@
 package com.example.todoapp.fragments.list
 
-import android.R.id.message
 import android.app.AlertDialog
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
@@ -11,6 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -24,13 +24,19 @@ import com.example.todoapp.utils.hideKeyboard
 import com.example.todoapp.utils.observeOnce
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
-import com.google.gson.GsonBuilder
-import com.google.gson.reflect.TypeToken
+import com.google.gson.JsonArray
+import com.google.gson.JsonObject
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import okhttp3.*
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okio.IOException
 import org.json.JSONObject
 import java.util.*
-import kotlin.collections.ArrayList
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 
 
 class ListFragment : Fragment(), SearchView.OnQueryTextListener {
@@ -51,7 +57,7 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
 
         // Data binding
         _binding = FragmentListBinding.inflate(inflater, container, false)
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.mSharedViewModel = mSharedViewModel
 
         // Setup RecyclerView
@@ -69,8 +75,6 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
 
         // Hide soft keyboard
         hideKeyboard(requireActivity())
-
-        login()
 
         return binding.root
     }
@@ -126,6 +130,8 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
             R.id.menu_priority_high -> mToDoViewModel.sortByHighPriority.observe(viewLifecycleOwner, { adapter.setData(it) })
             R.id.menu_priority_low -> mToDoViewModel.sortByLowPriority.observe(viewLifecycleOwner, { adapter.setData(it) })
             R.id.menu_download_plan->download()
+            R.id.menu_upload_plan->upload()
+            R.id.menu_login->findNavController().navigate(R.id.action_listFragment_to_loginFragment)
         }
         return super.onOptionsItemSelected(item)
     }
@@ -155,10 +161,6 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
                 adapter.setData(it)
             }
         })
-    }
-
-    private fun countDown() {
-
     }
 
     // Show AlertDialog to Confirm Removal of All Items from Database Table
@@ -249,7 +251,6 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
 
         val res=makeRequest(request)
 
-
         val jsonObject=JSONObject(res)
         val data=jsonObject.getJSONArray("data")
 
@@ -259,9 +260,11 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
     }
 
 
-    fun <T> stringToArray(s: String?, clazz: Class<Array<T>>?): List<T>? {
-        val arr = Gson().fromJson(s, clazz)
-        return listOf(*arr)//or return Arrays.asList(new Gson().fromJson(s, clazz)); for a one-liner
+    fun upload(){
+        val builder=makeAlertDialog("Successfully upload data!","Upload Data",
+            "Are you sure you want to upload data?"
+        ) { uploadPlan() }
+        builder.create().show()
     }
 
     fun uploadPlan(){
@@ -271,12 +274,32 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
 
 //        Log.d("DATA",token.toString())
 
-        val requestBody = FormBody.Builder()
-            .add("token", token.toString())
-            .build()
+        val jsonArray=JsonArray()
+
+        val lists=mToDoViewModel.getAllData.value
+
+
+        for(i in lists?.indices!!){
+            val jo=JsonObject()
+            jo.addProperty("id",lists[i].id)
+            jo.addProperty("userId",lists[i].userId)
+            jo.addProperty("title",lists[i].title)
+            jo.addProperty("priority",lists[i].priority.toString())
+            jo.addProperty("description",lists[i].description)
+            jo.addProperty("isDone",lists[i].isDone.toString())
+            jo.addProperty("registerTime",lists[i].registerTime)
+//            jo.addProperty("registerTime","2022-12-12 12:12:12")
+            jsonArray.add(jo)
+        }
+
+        val mediaType = "application/json; charset=utf-8".toMediaTypeOrNull()
+
+        val requestBody = jsonArray.toString().toRequestBody(mediaType)
+
+
 
         //创建request请求对象
-        val request = okhttp3.Request.Builder()
+        val request = Request.Builder()
             .url(url)
             .addHeader("token",token.toString())
             .post(requestBody)
@@ -284,25 +307,13 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
 
         //创建call并调用enqueue()方法实现网络请求
 
-        var flag=false
-        var res="res"
-        OkHttpClient().newCall(request)
-            .enqueue(object : Callback {
-                override fun onFailure(call: Call, e: IOException) {
-                }
+        val res=makeRequest(request)
+        Log.d("DATA",res)
+    }
 
-                override fun onResponse(call: Call, response: okhttp3.Response) {
-                    res= response.body.string()
-//                    Log.d("DATA", result.toString())
-
-                    flag=true
-                }
-            })
-
-        while(!flag){}
-        val jsonObject=JSONObject(res)
-        val data=jsonObject.getJSONArray("data")
-        Log.d("DATA",data.toString())
+    fun <T> stringToArray(s: String?, clazz: Class<Array<T>>?): List<T>? {
+        val arr = Gson().fromJson(s, clazz)
+        return listOf(*arr)//or return Arrays.asList(new Gson().fromJson(s, clazz)); for a one-liner
     }
 
     override fun onDestroyView() {
