@@ -19,28 +19,19 @@
         <entry key="..\:/ToDo-kt/app/src/main/res/layout/fragment_add.xml" value="0.25364583333333335" />
         <entry key="..\:/ToDo-kt/app/src/main/res/layout/fragment_count_down.xml" value="0.1" />
         <entry key="..\:/ToDo-kt/app/src/main/res/layout/fragment_list.xml" value="0.25364583333333335" />
+        <entry key="..\:/ToDo-kt/app/src/main/res/layout/fragment_login.xml" value="0.1125" />
         <entry key="..\:/ToDo-kt/app/src/main/res/layout/fragment_update.xml" value="0.25364583333333335" />
         <entry key="..\:/ToDo-kt/app/src/main/res/layout/row_layout.xml" value="0.25364583333333335" />
         <entry key="..\:/ToDo-kt/app/src/main/res/menu/add_fragment_menu.xml" value="0.25364583333333335" />
         <entry key="..\:/ToDo-kt/app/src/main/res/menu/list_fragment_menu.xml" value="0.25364583333333335" />
         <entry key="..\:/ToDo-kt/app/src/main/res/menu/update_fragment_menu.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/Stefan/AndroidStudioProjects/ToDoApp/app/src/main/res/layout/row_layout.xml" value="0.18342391304347827" />
-        <entry key="..\:/Users/wql/Desktop/android/ToDo-kt/app/src/main/res/drawable/ic_add.xml" value="0.1295" />
-        <entry key="..\:/Users/wql/Desktop/android/ToDo-kt/app/src/main/res/drawable/ic_baseline_domain_verification_24.xml" value="0.1295" />
-        <entry key="..\:/Users/wql/Desktop/android/ToDo-kt/app/src/main/res/drawable/ic_sign_logo.xml" value="0.1295" />
         <entry key="..\:/Users/wql/Desktop/android/ToDo-kt/app/src/main/res/drawable/item_background.xml" value="0.211" />
-        <entry key="..\:/Users/wql/Desktop/android/ToDo-kt/app/src/main/res/drawable/translucent_button.xml" value="0.1295" />
-        <entry key="..\:/Users/wql/Desktop/android/ToDo-kt/app/src/main/res/drawable/translucent_edit.xml" value="0.1295" />
-        <entry key="..\:/Users/wql/Desktop/android/ToDo-kt/app/src/main/res/layout/activity_main.xml" value="0.20364583333333333" />
         <entry key="..\:/Users/wql/Desktop/android/ToDo-kt/app/src/main/res/layout/fragment_add.xml" value="0.44654088050314467" />
         <entry key="..\:/Users/wql/Desktop/android/ToDo-kt/app/src/main/res/layout/fragment_list.xml" value="0.27515833919774807" />
-        <entry key="..\:/Users/wql/Desktop/android/ToDo-kt/app/src/main/res/layout/fragment_login.xml" value="0.22" />
-        <entry key="..\:/Users/wql/Desktop/android/ToDo-kt/app/src/main/res/layout/fragment_sign.xml" value="0.20364583333333333" />
         <entry key="..\:/Users/wql/Desktop/android/ToDo-kt/app/src/main/res/layout/fragment_update.xml" value="0.1" />
-        <entry key="..\:/Users/wql/Desktop/android/ToDo-kt/app/src/main/res/layout/row_layout.xml" value="0.25" />
-        <entry key="..\:/Users/wql/Desktop/android/ToDo-kt/app/src/main/res/menu/add_fragment_menu.xml" value="0.20364583333333333" />
+        <entry key="..\:/Users/wql/Desktop/android/ToDo-kt/app/src/main/res/layout/row_layout.xml" value="0.2863636363636364" />
         <entry key="..\:/Users/wql/Desktop/android/ToDo-kt/app/src/main/res/menu/list_fragment_menu.xml" value="0.20364583333333333" />
-        <entry key="..\:/Users/wql/Desktop/android/ToDo-kt/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1295" />
       </map>
     </option>
   </component>
