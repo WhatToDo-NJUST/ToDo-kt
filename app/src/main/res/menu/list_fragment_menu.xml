@@ -38,7 +38,7 @@
                     android:title="@string/upload_plan"/>
                 <item
                     android:id="@+id/menu_login"
-                    android:title="@string/login"/>
+                    android:title="@string/login" />
             </menu>
         </item>
     </group>

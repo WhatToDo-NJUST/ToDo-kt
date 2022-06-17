@@ -1,6 +1,10 @@
 package com.example.todoapp.fragments
 
+import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
+import android.widget.Button
 import android.widget.Spinner
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -61,6 +65,18 @@ class BindingAdapters {
                 view.findNavController().navigate(action)
             }
         }
+
+//        只能用在floatingactionbutton类型上的Button
+//        @BindingAdapter("android:navigateToSignFragment")
+//        @JvmStatic
+//        fun navigateToSignFragment(view: Button, navigate: Boolean){
+//            view.setOnClickListener {
+//                if(navigate){
+//                    view.findNavController().navigate(R.id.action_loginFragment_to_signFragment)
+//                }
+//            }
+//        }
+
 
     }
 

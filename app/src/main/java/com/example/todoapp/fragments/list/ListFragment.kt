@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -25,6 +26,10 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okio.IOException
@@ -126,7 +131,7 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
             R.id.menu_priority_low -> mToDoViewModel.sortByLowPriority.observe(viewLifecycleOwner, { adapter.setData(it) })
             R.id.menu_download_plan->download()
             R.id.menu_upload_plan->upload()
-            R.id.menu_login->login()
+            R.id.menu_login->findNavController().navigate(R.id.action_listFragment_to_loginFragment)
         }
         return super.onOptionsItemSelected(item)
     }
@@ -197,7 +202,6 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
                     flag=true
                 }
             })
-
 
         while(!flag){}
         return res
