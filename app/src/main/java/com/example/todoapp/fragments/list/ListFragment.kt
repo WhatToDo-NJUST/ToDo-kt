@@ -203,6 +203,7 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
                 }
             })
 
+
         while(!flag){}
         return res
     }
@@ -250,7 +251,6 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
 
         val res=makeRequest(request)
 
-
         val jsonObject=JSONObject(res)
         val data=jsonObject.getJSONArray("data")
 
@@ -258,7 +258,6 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
         lists?.let { adapter.setData(it) }
 
     }
-
 
 
     fun upload(){

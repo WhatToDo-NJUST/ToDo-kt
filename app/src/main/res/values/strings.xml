@@ -19,6 +19,11 @@
     <string name="upload_plan">upload</string>
     <string name="share_plan">share</string>
 
+    <string name="count_down">Count Down</string>
+    <string name="btn_play">Start</string>
+    <string name="btn_pause">Pause</string>
+    <string name="btn_stop">Stop</string>
+
     <string-array name="priorities">
         <item>High Priority</item>
         <item>Medium Priority</item>
