@@ -11,6 +11,7 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
 
     var dataList = emptyList<ToDoData>()
 
+//    RowLayoutBinding是与row_layout.xml绑定的自动生成的类
     class MyViewHolder(private val binding: RowLayoutBinding) : RecyclerView.ViewHolder(binding.root){
 
         fun bind(toDoData: ToDoData){
@@ -21,17 +22,13 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
             fun from(parent: ViewGroup): MyViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val binding = RowLayoutBinding.inflate(layoutInflater, parent, false)
-                return MyViewHolder(
-                    binding
-                )
+                return MyViewHolder(binding)
             }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        return MyViewHolder.from(
-            parent
-        )
+        return MyViewHolder.from(parent)
     }
 
     override fun getItemCount(): Int {

@@ -10,6 +10,11 @@ import com.example.todoapp.data.repository.ToDoRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
+
+//ViewModel 类旨在以注重生命周期的方式存储和管理界面相关的数据。
+// ViewModel 类让数据可在发生屏幕旋转等配置更改后继续留存。
+
+
 class ToDoViewModel(application: Application) : AndroidViewModel(application) {
 
     private val toDoDao = ToDoDatabase.getDatabase(

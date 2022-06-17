@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -38,8 +39,30 @@ class UpdateFragment : Fragment() {
         // Spinner Item Selected Listener
         binding.currentPrioritiesSpinner.onItemSelectedListener = mSharedViewModel.listener
 
+        setTimePicker()
+
         return binding.root
     }
+
+    private fun setTimePicker() {
+//      时间栏获取焦点时不自动弹出键盘
+        binding.currentTimeEt.showSoftInputOnFocus = false
+//        当时间栏获取焦点时弹出时间选择器
+        binding.currentTimeEt.setOnFocusChangeListener { v, hasFocus ->
+            binding.updateTimePicker.isVisible = hasFocus
+        }
+
+        // 绑定时间选择器
+        binding.updateTimePicker.setOnTimeChangedListener { view, hourOfDay, minute ->
+//            Toast.makeText(
+//                context,
+//                "您选择的时间是：" + hourOfDay + "时" + minute + "分!",
+//                Toast.LENGTH_SHORT
+//            ).show()
+            binding.currentTimeEt.setText("$hourOfDay:$minute")
+        }
+    }
+
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.update_fragment_menu, menu)
@@ -57,15 +80,21 @@ class UpdateFragment : Fragment() {
         val title = binding.currentTitleEt.text.toString()
         val description = binding.currentDescriptionEt.text.toString()
         val getPriority = binding.currentPrioritiesSpinner.selectedItem.toString()
+        val time=binding.currentTimeEt.text.toString()
 
         val validation = mSharedViewModel.verifyDataFromUser(title, description)
         if (validation) {
             // Update Current Item
             val updatedItem = ToDoData(
-                args.currentItem.id,
+                "0",
+                args.currentItem.id.toString(),
                 title,
                 mSharedViewModel.parsePriority(getPriority),
-                description
+//                getPriority,
+                description,
+                false,
+                time,
+
             )
             mToDoViewModel.updateData(updatedItem)
             Toast.makeText(requireContext(), "Successfully updated!", Toast.LENGTH_SHORT).show()

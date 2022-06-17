@@ -15,6 +15,7 @@
         android:padding="24dp"
         tools:context=".fragments.update.UpdateFragment">
 
+
         <EditText
             android:id="@+id/current_title_et"
             android:layout_width="0dp"
@@ -31,26 +32,42 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+
         <Spinner
             android:id="@+id/current_priorities_spinner"
             android:layout_width="0dp"
             android:layout_height="60dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="24dp"
             android:background="@drawable/custom_input"
             android:entries="@array/priorities"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
             android:parsePriorityToInt="@{args.currentItem.priority}"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/current_title_et" />
 
         <EditText
+            android:id="@+id/current_time_et"
+            android:layout_width="363dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="16dp"
+            android:ems="10"
+            android:background="@drawable/custom_input"
+            android:hint="@string/time"
+            android:inputType="time"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            android:text="@{args.currentItem.registerTime}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/current_priorities_spinner" />
+
+        <EditText
             android:id="@+id/current_description_et"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="8dp"
+            android:layout_width="363dp"
+            android:layout_height="450dp"
+            android:layout_marginTop="16dp"
             android:background="@drawable/custom_input"
             android:ems="10"
             android:gravity="top|start"
@@ -60,11 +77,26 @@
             android:paddingTop="16dp"
             android:paddingEnd="24dp"
             android:text="@{args.currentItem.description}"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/current_priorities_spinner" />
+            app:layout_constraintTop_toBottomOf="@+id/current_time_et" />
+
+        <TimePicker
+            android:id="@+id/update_time_picker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="188dp"
+            android:background="#FFFFFFFF"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/current_description_et"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.343" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>
