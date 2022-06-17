@@ -24,6 +24,9 @@
             app:exitAnim="@anim/to_right"
             app:popEnterAnim="@anim/from_right"
             app:popExitAnim="@anim/to_left" />
+        <action
+            android:id="@+id/action_listFragment_to_countDownFragment"
+            app:destination="@id/countDownFragment" />
     </fragment>
     <fragment
         android:id="@+id/addFragment"
@@ -54,5 +57,14 @@
         <argument
             android:name="currentItem"
             app:argType="com.example.todoapp.data.models.ToDoData" />
+    </fragment>
+    <fragment
+        android:id="@+id/countDownFragment"
+        android:name="com.example.todoapp.fragments.countdown.CountDownFragment"
+        android:label="倒计时"
+        tools:layout="@layout/fragment_count_down" >
+        <action
+            android:id="@+id/action_countDownFragment_to_listFragment"
+            app:destination="@id/listFragment" />
     </fragment>
 </navigation>

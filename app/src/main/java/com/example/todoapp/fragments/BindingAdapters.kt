@@ -26,6 +26,15 @@ class BindingAdapters {
                 }
             }
         }
+        @BindingAdapter("android:navigateToCountDownFragment")
+        @JvmStatic
+        fun navigateToCountDownFragment(view: FloatingActionButton, navigate: Boolean){
+            view.setOnClickListener {
+                if(navigate){
+                    view.findNavController().navigate(R.id.action_listFragment_to_countDownFragment)
+                }
+            }
+        }
         @BindingAdapter("android:emptyDatabase")
         @JvmStatic
         fun emptyDatabase(view: View, emptyDatabase: MutableLiveData<Boolean>){
