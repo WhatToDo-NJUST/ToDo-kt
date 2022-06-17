@@ -28,14 +28,10 @@ import com.google.gson.JsonObject
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okio.IOException
-import org.json.JSONArray
 import org.json.JSONObject
 import java.util.*
-<<<<<<< Updated upstream
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
-=======
->>>>>>> Stashed changes
 
 
 class ListFragment : Fragment(), SearchView.OnQueryTextListener {
@@ -130,10 +126,7 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
             R.id.menu_priority_low -> mToDoViewModel.sortByLowPriority.observe(viewLifecycleOwner, { adapter.setData(it) })
             R.id.menu_download_plan->download()
             R.id.menu_upload_plan->upload()
-<<<<<<< Updated upstream
             R.id.menu_login->login()
-=======
->>>>>>> Stashed changes
         }
         return super.onOptionsItemSelected(item)
     }
@@ -258,34 +251,30 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
         val data=jsonObject.getJSONArray("data")
 
         val lists=stringToArray(data.toString(), Array<ToDoData>::class.java)
-
         lists?.let { adapter.setData(it) }
 
     }
 
-<<<<<<< Updated upstream
-    
+
+
     fun upload(){
-=======
-
-
-
-    private fun upload(){
->>>>>>> Stashed changes
         val builder=makeAlertDialog("Successfully upload data!","Upload Data",
             "Are you sure you want to upload data?"
         ) { uploadPlan() }
         builder.create().show()
     }
 
-    private fun uploadPlan(){
+    fun uploadPlan(){
         val url = "http://10.0.2.2:10001//todo/upload"
         var shp = context?.getSharedPreferences("data", MODE_PRIVATE)
         var token: String? = shp?.getString("token","")
 
-<<<<<<< Updated upstream
+//        Log.d("DATA",token.toString())
+
         val jsonArray=JsonArray()
+
         val lists=mToDoViewModel.getAllData.value
+
 
         for(i in lists?.indices!!){
             val jo=JsonObject()
@@ -299,23 +288,13 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
 //            jo.addProperty("registerTime","2022-12-12 12:12:12")
             jsonArray.add(jo)
         }
-=======
-        var datas= mutableListOf<ToDoData>()
-
-        var lists=mToDoViewModel.getAllData.value
-        for(i in lists?.indices!!)
-        datas= datas.plusElement(lists[i]) as MutableList<ToDoData>
-//
-        val uploadData=JSONArray(datas)
-        Log.d("DATA",datas.toString())
-
-        val requestBody = FormBody.Builder()
-            .add("todos", uploadData.toString())
-            .build()
->>>>>>> Stashed changes
 
         val mediaType = "application/json; charset=utf-8".toMediaTypeOrNull()
+
         val requestBody = jsonArray.toString().toRequestBody(mediaType)
+
+
+
         //创建request请求对象
         val request = Request.Builder()
             .url(url)
@@ -326,17 +305,9 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
         //创建call并调用enqueue()方法实现网络请求
 
         val res=makeRequest(request)
-<<<<<<< Updated upstream
-    }
-
-=======
-//        val jsonObject=JSONObject(res)
-//        val data=jsonObject.getJSONArray("data")
         Log.d("DATA",res)
     }
 
-//    json字符串转类数组
->>>>>>> Stashed changes
     fun <T> stringToArray(s: String?, clazz: Class<Array<T>>?): List<T>? {
         val arr = Gson().fromJson(s, clazz)
         return listOf(*arr)//or return Arrays.asList(new Gson().fromJson(s, clazz)); for a one-liner
