@@ -37,8 +37,8 @@
                     android:id="@+id/menu_upload_plan"
                     android:title="@string/upload_plan"/>
                 <item
-                    android:id="@+id/menu_exit"
-                    android:title="@string/exit" />
+                    android:id="@+id/menu_login"
+                    android:title="@string/login" />
             </menu>
         </item>
     </group>
@@ -46,5 +46,9 @@
     <item
         android:id="@+id/menu_delete_all"
         android:title="@string/delete_all"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/menu_exit"
+        android:title="@string/exit"
         app:showAsAction="never"/>
 </menu>

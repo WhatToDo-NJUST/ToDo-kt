@@ -1,6 +1,7 @@
 package com.example.todoapp.fragments.list
 
 import android.app.AlertDialog
+import android.app.Application
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -134,7 +135,8 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
             R.id.menu_priority_low -> mToDoViewModel.sortByLowPriority.observe(viewLifecycleOwner, { adapter.setData(it) })
             R.id.menu_download_plan-> download()
             R.id.menu_upload_plan->upload()
-            R.id.menu_exit->findNavController().navigate(R.id.action_listFragment_to_loginFragment)
+            R.id.menu_login->findNavController().navigate(R.id.action_listFragment_to_loginFragment)
+            R.id.menu_exit->exit()
         }
         return super.onOptionsItemSelected(item)
     }
@@ -190,33 +192,21 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
         builder.setMessage(message)
         return builder
     }
-//
-//    private fun makeRequest(request: Request):String{
-//        var flag=false
-//        var res="res"
-//        OkHttpClient().newCall(request)
-//            .enqueue(object : Callback {
-//                override fun onFailure(call: Call, e: IOException) {
-//                    flag=true
-//                }
-//
-//                override fun onResponse(call: Call, response:Response) {
-//                    res= response.body.string()
-//                    flag=true
-//                }
-//            })
-//
-//
-//        while(!flag){}
-//        return res
-//    }
 
 
     private fun download(){
-        val builder=makeAlertDialog("Successfully download data!","Download Data",
-            "Are you sure you want to download data?"
-        ) { downloadPlan() }
-        builder.create().show()
+        var shp= context?.getSharedPreferences("data", MODE_PRIVATE)!!
+        if(shp.getString("token",null)==null){
+            Toast.makeText(context,"请先登录",Toast.LENGTH_SHORT).show()
+            findNavController().navigate(R.id.action_listFragment_to_loginFragment)
+        }
+        else{
+            val builder=makeAlertDialog("Successfully download data!","Download Data",
+                "Are you sure you want to download data?"
+            ) { downloadPlan() }
+            builder.create().show()
+        }
+
     }
 
     private fun downloadPlan(){
@@ -241,10 +231,16 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
 
 
     fun upload(){
-        val builder=makeAlertDialog("Successfully upload data!","Upload Data",
-            "Are you sure you want to upload data?"
-        ) { uploadPlan() }
-        builder.create().show()
+        var shp= context?.getSharedPreferences("data", MODE_PRIVATE)!!
+        if(shp.getString("token",null)==null){
+            Toast.makeText(context,"请先登录",Toast.LENGTH_SHORT).show()
+            findNavController().navigate(R.id.action_listFragment_to_loginFragment)
+        }else{
+            val builder=makeAlertDialog("Successfully upload data!","Upload Data",
+                "Are you sure you want to upload data?"
+            ) { uploadPlan() }
+            builder.create().show()
+        }
     }
 
     fun uploadPlan(){
@@ -289,6 +285,14 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
 
         val res=makeRequest(request)
         Log.d("DATA",res)
+    }
+
+    fun exit(){
+        var shp= context?.getSharedPreferences("data", MODE_PRIVATE)!!
+        var editor:SharedPreferences.Editor=shp.edit()
+        editor.clear()
+        editor.apply()
+        Toast.makeText(context,"退出登录,若需要请重新登录",Toast.LENGTH_LONG).show()
     }
 
     fun <T> stringToArray(s: String?, clazz: Class<Array<T>>?): List<T>? {
