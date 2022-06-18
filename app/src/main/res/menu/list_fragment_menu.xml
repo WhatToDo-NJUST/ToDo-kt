@@ -37,8 +37,8 @@
                     android:id="@+id/menu_upload_plan"
                     android:title="@string/upload_plan"/>
                 <item
-                    android:id="@+id/menu_login"
-                    android:title="@string/login" />
+                    android:id="@+id/menu_exit"
+                    android:title="@string/exit" />
             </menu>
         </item>
     </group>

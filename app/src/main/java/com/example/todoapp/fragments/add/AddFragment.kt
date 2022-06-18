@@ -71,14 +71,15 @@ class AddFragment : Fragment() {
         val mPriority = binding.prioritiesSpinner.selectedItem.toString()
         val mDescription = binding.descriptionEt.text.toString()
         val mTime = binding.timeEt.text.toString()
-        val userId=""
+        val userId="123"
         val isDone=false
 
         val validation = mSharedViewModel.verifyDataFromUser(mTitle, mDescription)
+
         if (validation) {
             // Insert Data to Database
             val newData = ToDoData(
-                "0",
+                (0..100000000).random().toString(),
                 userId,
                 mTitle,
                 mSharedViewModel.parsePriority(mPriority),
