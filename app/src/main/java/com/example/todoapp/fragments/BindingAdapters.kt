@@ -5,6 +5,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.Spinner
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -66,6 +67,8 @@ class BindingAdapters {
                 Priority.LOW -> { cardView.setCardBackgroundColor(cardView.context.getColor(R.color.green)) }
             }
         }
+
+
         @BindingAdapter("android:sendDataToUpdateFragment")
         @JvmStatic
         fun sendDataToUpdateFragment(view: ConstraintLayout, currentItem: ToDoData){

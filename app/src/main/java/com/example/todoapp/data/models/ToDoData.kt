@@ -10,9 +10,9 @@ import java.time.LocalDateTime
 @Entity(tableName = "todo_table")
 @Parcelize
 data class ToDoData(
-    @PrimaryKey
-    var id: String,
-    var userId:String,
+    @PrimaryKey(autoGenerate = true)
+    var id: Int,
+    var userId:Int,
     var title: String,
     var priority: Priority,
     var description: String,

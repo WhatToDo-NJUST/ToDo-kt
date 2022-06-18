@@ -1,6 +1,8 @@
 package com.example.todoapp.fragments.add
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.TimePicker
 import android.widget.Toast
@@ -13,6 +15,9 @@ import com.example.todoapp.data.models.ToDoData
 import com.example.todoapp.data.viewmodel.ToDoViewModel
 import com.example.todoapp.databinding.FragmentAddBinding
 import com.example.todoapp.fragments.SharedViewModel
+import java.time.LocalDateTime
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 
 class AddFragment : Fragment() {
 
@@ -48,10 +53,16 @@ class AddFragment : Fragment() {
         binding.timeEt.setOnFocusChangeListener { v, hasFocus ->
             binding.timePicker.isVisible = hasFocus
         }
+        binding.timePicker.setIs24HourView(true)
 
         // 绑定时间选择器
         binding.timePicker.setOnTimeChangedListener { view, hourOfDay, minute ->
-            binding.timeEt.setText("$hourOfDay:$minute")
+            var hour=""
+            var min=""
+            if(hourOfDay<10) hour="0"+hourOfDay.toString()
+            if(minute<10) min="0"+minute.toString()
+            val sec=(0..59).random()
+            binding.timeEt.setText("$hourOfDay:$minute:$sec")
         }
     }
 
@@ -70,15 +81,19 @@ class AddFragment : Fragment() {
         val mTitle = binding.titleEt.text.toString()
         val mPriority = binding.prioritiesSpinner.selectedItem.toString()
         val mDescription = binding.descriptionEt.text.toString()
-        val mTime = binding.timeEt.text.toString()
-        val userId=""
+        val date=DateTimeFormatter.ofPattern("yyyy-MM-dd").format(LocalDateTime.now()).toString()
+        val mTime = date+" "+ binding.timeEt.text.toString()
+        Log.d("DATA",mTime.toString())
+        val userId=
+            context?.getSharedPreferences("data", Context.MODE_PRIVATE)?.getInt("userId",0)!!
         val isDone=false
 
         val validation = mSharedViewModel.verifyDataFromUser(mTitle, mDescription)
+
         if (validation) {
             // Insert Data to Database
             val newData = ToDoData(
-                "0",
+                0,
                 userId,
                 mTitle,
                 mSharedViewModel.parsePriority(mPriority),

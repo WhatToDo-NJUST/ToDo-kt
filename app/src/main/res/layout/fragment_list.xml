@@ -13,16 +13,17 @@
         android:id="@+id/listLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/background"
         tools:context=".fragments.list.ListFragment">
 
         <TextView
             android:id="@+id/currentData"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textSize="25dp"
             android:text="@{mSharedViewModel.getCurrentData().toString()}"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="10dp"/>
+            android:textSize="25dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="20dp" />
 
         <View
             android:layout_width="match_parent"
@@ -70,10 +71,11 @@
             android:clickable="true"
             android:focusable="true"
             android:navigateToCountDownFragment="@{true}"
-            android:src="@drawable/ic_add"
+            android:src="@drawable/ic_access_time"
             android:tint="@color/white"
             app:layout_constraintBottom_toTopOf="@+id/floatingActionButton"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:ignore="SpeakableTextPresentCheck" />
 
         <ImageView
             android:id="@+id/no_data_imageView"

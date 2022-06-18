@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="24dp"
+    android:background="@drawable/add_background"
+    android:alpha="0.9"
     tools:context=".fragments.add.AddFragment">
 
 
@@ -12,12 +14,17 @@
         android:id="@+id/title_et"
         android:layout_width="0dp"
         android:layout_height="60dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="120dp"
+        android:layout_marginEnd="30dp"
         android:background="@android:color/transparent"
         android:ems="10"
         android:hint="@string/title"
         android:inputType="textPersonName"
         android:paddingStart="24dp"
         android:paddingEnd="24dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,7 +35,9 @@
         android:id="@+id/priorities_spinner"
         android:layout_width="0dp"
         android:layout_height="60dp"
+        android:layout_marginStart="30dp"
         android:layout_marginTop="12dp"
+        android:layout_marginEnd="30dp"
         android:background="@android:color/transparent"
         android:entries="@array/priorities"
         android:paddingStart="20dp"
@@ -39,9 +48,11 @@
 
     <EditText
         android:id="@+id/time_et"
-        android:layout_width="363dp"
+        android:layout_width="0dp"
         android:layout_height="60dp"
+        android:layout_marginStart="45dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="45dp"
         android:ems="10"
         android:hint="@string/time"
         android:inputType="time"
@@ -51,11 +62,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/priorities_spinner" />
 
+
     <EditText
         android:id="@+id/description_et"
-        android:layout_width="363dp"
-        android:layout_height="450dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="0dp"
+        android:layout_height="250dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="30dp"
         android:background="@android:color/transparent"
         android:ems="10"
         android:gravity="top|start"
@@ -68,14 +82,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/time_et" />
 
-
     <TimePicker
         android:id="@+id/time_picker"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
         android:layout_marginTop="188dp"
+        android:layout_marginEnd="30dp"
         android:background="#FFFFFFFF"
         android:visibility="invisible"
+        android:timePickerMode="spinner"
         app:layout_constraintBottom_toBottomOf="@+id/description_et"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.058"

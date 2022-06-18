@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -21,6 +22,7 @@ import com.example.todoapp.databinding.FragmentListBinding
 import com.example.todoapp.fragments.SharedViewModel
 import com.example.todoapp.fragments.list.adapter.ListAdapter
 import com.example.todoapp.utils.hideKeyboard
+import com.example.todoapp.utils.makeRequest
 import com.example.todoapp.utils.observeOnce
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
@@ -37,6 +39,7 @@ import org.json.JSONObject
 import java.util.*
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
+
 
 
 class ListFragment : Fragment(), SearchView.OnQueryTextListener {
@@ -129,9 +132,9 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
             R.id.menu_delete_all -> confirmRemoval()
             R.id.menu_priority_high -> mToDoViewModel.sortByHighPriority.observe(viewLifecycleOwner, { adapter.setData(it) })
             R.id.menu_priority_low -> mToDoViewModel.sortByLowPriority.observe(viewLifecycleOwner, { adapter.setData(it) })
-            R.id.menu_download_plan->download()
+            R.id.menu_download_plan-> download()
             R.id.menu_upload_plan->upload()
-            R.id.menu_login->findNavController().navigate(R.id.action_listFragment_to_loginFragment)
+            R.id.menu_exit->findNavController().navigate(R.id.action_listFragment_to_loginFragment)
         }
         return super.onOptionsItemSelected(item)
     }
@@ -187,50 +190,27 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
         builder.setMessage(message)
         return builder
     }
+//
+//    private fun makeRequest(request: Request):String{
+//        var flag=false
+//        var res="res"
+//        OkHttpClient().newCall(request)
+//            .enqueue(object : Callback {
+//                override fun onFailure(call: Call, e: IOException) {
+//                    flag=true
+//                }
+//
+//                override fun onResponse(call: Call, response:Response) {
+//                    res= response.body.string()
+//                    flag=true
+//                }
+//            })
+//
+//
+//        while(!flag){}
+//        return res
+//    }
 
-    private fun makeRequest(request: Request):String{
-        var flag=false
-        var res="res"
-        OkHttpClient().newCall(request)
-            .enqueue(object : Callback {
-                override fun onFailure(call: Call, e: IOException) {
-                    flag=true
-                }
-
-                override fun onResponse(call: Call, response:Response) {
-                    res= response.body.string()
-                    flag=true
-                }
-            })
-
-
-        while(!flag){}
-        return res
-    }
-
-    private fun login(){
-        val url = "http://10.0.2.2:10001//user/login"
-
-        val requestBody = FormBody.Builder()
-            .add("phone", "13750794329")
-            .add("password", "123456")
-            .build()
-
-        //创建request请求对象
-        val request = Request.Builder()
-            .url(url)
-            .post(requestBody)
-            .build()
-
-        val res=makeRequest(request)
-        val jsonObject=JSONObject(res)
-        val data=jsonObject.getJSONObject("data")
-        val sharedPreferences:SharedPreferences= (context?.getSharedPreferences("data",MODE_PRIVATE) ?:null) as SharedPreferences
-        val editor:SharedPreferences.Editor=sharedPreferences.edit()
-        editor.putString("token",data.getString("token"))
-        editor.apply()
-
-    }
 
     private fun download(){
         val builder=makeAlertDialog("Successfully download data!","Download Data",
