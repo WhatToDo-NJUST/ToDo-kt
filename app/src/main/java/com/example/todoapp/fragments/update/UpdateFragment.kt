@@ -81,13 +81,15 @@ class UpdateFragment : Fragment() {
         val description = binding.currentDescriptionEt.text.toString()
         val getPriority = binding.currentPrioritiesSpinner.selectedItem.toString()
         val time=binding.currentTimeEt.text.toString()
+        val id=args.currentItem.id
+        val userId=args.currentItem.userId
 
         val validation = mSharedViewModel.verifyDataFromUser(title, description)
         if (validation) {
             // Update Current Item
             val updatedItem = ToDoData(
-                "0",
-                args.currentItem.id.toString(),
+                id,
+                userId,
                 title,
                 mSharedViewModel.parsePriority(getPriority),
 //                getPriority,

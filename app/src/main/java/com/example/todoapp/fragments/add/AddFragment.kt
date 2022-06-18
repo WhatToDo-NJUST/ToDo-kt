@@ -61,7 +61,7 @@ class AddFragment : Fragment() {
             var min=""
             if(hourOfDay<10) hour="0"+hourOfDay.toString()
             if(minute<10) min="0"+minute.toString()
-            val sec=(0..60).random()
+            val sec=(0..59).random()
             binding.timeEt.setText("$hourOfDay:$minute:$sec")
         }
     }
@@ -85,7 +85,7 @@ class AddFragment : Fragment() {
         val mTime = date+" "+ binding.timeEt.text.toString()
         Log.d("DATA",mTime.toString())
         val userId=
-            context?.getSharedPreferences("data", Context.MODE_PRIVATE)?.getString("userId","")!!
+            context?.getSharedPreferences("data", Context.MODE_PRIVATE)?.getInt("userId",0)!!
         val isDone=false
 
         val validation = mSharedViewModel.verifyDataFromUser(mTitle, mDescription)
@@ -93,7 +93,7 @@ class AddFragment : Fragment() {
         if (validation) {
             // Insert Data to Database
             val newData = ToDoData(
-                (0..100000000).random().toString(),
+                0,
                 userId,
                 mTitle,
                 mSharedViewModel.parsePriority(mPriority),

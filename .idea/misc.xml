@@ -26,11 +26,18 @@
         <entry key="..\:/ToDo-kt/app/src/main/res/menu/list_fragment_menu.xml" value="0.25364583333333335" />
         <entry key="..\:/ToDo-kt/app/src/main/res/menu/update_fragment_menu.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/Stefan/AndroidStudioProjects/ToDoApp/app/src/main/res/layout/row_layout.xml" value="0.18342391304347827" />
+        <entry key="..\:/Users/wql/Desktop/android/ToDo-kt/app/src/main/res/drawable-v24/ic_access_time.xml" value="0.1" />
+        <entry key="..\:/Users/wql/Desktop/android/ToDo-kt/app/src/main/res/drawable/ic_login_logo.xml" value="0.1295" />
+        <entry key="..\:/Users/wql/Desktop/android/ToDo-kt/app/src/main/res/drawable/ic_sign_logo.xml" value="0.211" />
+        <entry key="..\:/Users/wql/Desktop/android/ToDo-kt/app/src/main/res/drawable/ic_sortby.xml" value="0.1795" />
         <entry key="..\:/Users/wql/Desktop/android/ToDo-kt/app/src/main/res/drawable/item_background.xml" value="0.211" />
+        <entry key="..\:/Users/wql/Desktop/android/ToDo-kt/app/src/main/res/drawable/translucent_button.xml" value="0.1295" />
         <entry key="..\:/Users/wql/Desktop/android/ToDo-kt/app/src/main/res/layout/fragment_add.xml" value="0.44654088050314467" />
         <entry key="..\:/Users/wql/Desktop/android/ToDo-kt/app/src/main/res/layout/fragment_list.xml" value="0.27515833919774807" />
+        <entry key="..\:/Users/wql/Desktop/android/ToDo-kt/app/src/main/res/layout/fragment_login.xml" value="0.19722222222222222" />
+        <entry key="..\:/Users/wql/Desktop/android/ToDo-kt/app/src/main/res/layout/fragment_sign.xml" value="0.20364583333333333" />
         <entry key="..\:/Users/wql/Desktop/android/ToDo-kt/app/src/main/res/layout/fragment_update.xml" value="0.1" />
-        <entry key="..\:/Users/wql/Desktop/android/ToDo-kt/app/src/main/res/layout/row_layout.xml" value="0.2863636363636364" />
+        <entry key="..\:/Users/wql/Desktop/android/ToDo-kt/app/src/main/res/layout/row_layout.xml" value="0.1" />
         <entry key="..\:/Users/wql/Desktop/android/ToDo-kt/app/src/main/res/menu/list_fragment_menu.xml" value="0.20364583333333333" />
       </map>
     </option>

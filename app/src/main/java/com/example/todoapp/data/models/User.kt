@@ -9,7 +9,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class User(
     @PrimaryKey(autoGenerate = true)
-    var id: String,
+    var id: Int,
     var name: String,
     var password: String,
     var state: Int,
