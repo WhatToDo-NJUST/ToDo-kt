@@ -122,14 +122,14 @@
 
                 <!--嵌套线性布局-->
                 <LinearLayout
-                    android:id="@+id/EmailLayout"
+                    android:id="@+id/TelephoneLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
                     <!--邮箱输入-->
                     <EditText
-                        android:id="@+id/EmailEdit"
+                        android:id="@+id/TelephoneEdit"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"

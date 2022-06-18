@@ -86,12 +86,11 @@ class LoginFragment : Fragment() {
         val code = jsonObject.getInt("code")
         if(code==200){
             val data = jsonObject.getJSONObject("data")
-            saveToken(data.getString("token"))
+            saveData(data.getString("token"),data.getString("id"))
             makeToast("登录成功")
             navController?.navigate(R.id.action_loginFragment_to_listFragment)
         }
         else{
-            Log.d("DATA", "code:$code")
             val msg=jsonObject.getString("msg")
             makeToast(msg)
         }
@@ -111,13 +110,14 @@ class LoginFragment : Fragment() {
         toast.show()
     }
 
-    fun saveToken(token: String) {
+    fun saveData(token: String,userId:String) {
         val sharedPreferences: SharedPreferences = (context?.getSharedPreferences(
             "data",
             Context.MODE_PRIVATE
         ) ?: null) as SharedPreferences
         val editor: SharedPreferences.Editor = sharedPreferences.edit()
         editor.putString("token", token)
+        editor.putString("userId",userId)
         editor.apply()
     }
 
