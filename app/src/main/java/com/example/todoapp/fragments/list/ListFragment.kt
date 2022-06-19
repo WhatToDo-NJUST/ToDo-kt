@@ -215,7 +215,7 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
             findNavController().navigate(R.id.action_listFragment_to_loginFragment)
         }
         else{
-            val builder=makeAlertDialog("Successfully download data!","Download Data",
+            val builder=makeAlertDialog("download data!","Download Data",
                 "Are you sure you want to download data?"
             ) { downloadPlan() }
             builder.create().show()
@@ -234,6 +234,12 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
             .build()
 
         val res=makeRequest(request)
+        if (res == "error") {
+            Toast.makeText(context,"网络故障，请调试网络后重新登录",
+                Toast.LENGTH_SHORT).show()
+            return
+        }
+
 
         val jsonObject=JSONObject(res)
         val data=jsonObject.getJSONArray("data")
@@ -250,7 +256,7 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
             Toast.makeText(context,"请先登录",Toast.LENGTH_SHORT).show()
             findNavController().navigate(R.id.action_listFragment_to_loginFragment)
         }else{
-            val builder=makeAlertDialog("Successfully upload data!","Upload Data",
+            val builder=makeAlertDialog("upload data!","Upload Data",
                 "Are you sure you want to upload data?"
             ) { uploadPlan() }
             builder.create().show()
@@ -298,7 +304,11 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
         //创建call并调用enqueue()方法实现网络请求
 
         val res=makeRequest(request)
-        Log.d("DATA",res)
+        if (res == "error") {
+            Toast.makeText(context,"网络故障，请调试网络后重新登录",
+                Toast.LENGTH_SHORT).show()
+            return
+        }
     }
 
     fun exit(){

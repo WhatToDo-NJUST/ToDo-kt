@@ -13,13 +13,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="24dp"
-        tools:context=".fragments.update.UpdateFragment">
+        tools:context=".fragments.update.UpdateFragment"
+        android:background="@drawable/update_bg">
 
 
         <EditText
             android:id="@+id/current_title_et"
             android:layout_width="0dp"
             android:layout_height="60dp"
+            android:layout_marginTop="90dp"
+            android:layout_marginEnd="100dp"
+            android:alpha="0.8"
             android:background="@drawable/custom_input"
             android:ems="10"
             android:hint="@string/title"
@@ -28,39 +32,41 @@
             android:paddingEnd="24dp"
             android:text="@{args.currentItem.title}"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
 
         <Spinner
             android:id="@+id/current_priorities_spinner"
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_marginTop="24dp"
+            android:layout_marginEnd="100dp"
+            android:alpha="0.8"
             android:background="@drawable/custom_input"
             android:entries="@array/priorities"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
             android:parsePriorityToInt="@{args.currentItem.priority}"
+            android:popupBackground="@drawable/spinner_background"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/current_title_et" />
 
         <EditText
             android:id="@+id/current_date_et"
-            android:layout_width="160dp"
+            android:layout_width="140dp"
             android:layout_height="60dp"
             android:layout_marginTop="20dp"
+            android:alpha="0.8"
             android:background="@drawable/custom_input"
+            android:cursorVisible="true"
             android:ems="10"
+            android:focusable="false"
             android:hint="@string/date"
+            android:inputType="none"
             android:paddingStart="24dp"
             android:paddingEnd="24dp"
             android:parseDate="@{args.currentItem.registerTime}"
-            android:inputType="none"
-            android:focusable="false"
-            android:cursorVisible="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.003"
             app:layout_constraintStart_toStartOf="parent"
@@ -68,28 +74,31 @@
 
         <EditText
             android:id="@+id/current_time_et"
-            android:layout_width="160dp"
+            android:layout_width="120dp"
             android:layout_height="60dp"
             android:layout_marginTop="20dp"
+            android:alpha="0.8"
             android:background="@drawable/custom_input"
+            android:cursorVisible="true"
             android:ems="10"
+            android:focusable="false"
             android:hint="@string/time"
+            android:inputType="none"
             android:paddingStart="24dp"
             android:paddingEnd="24dp"
             android:parseTime="@{args.currentItem.registerTime}"
-            android:inputType="none"
-            android:focusable="false"
-            android:cursorVisible="true"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.984"
+            app:layout_constraintHorizontal_bias="0.644"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/current_priorities_spinner" />
 
         <EditText
             android:id="@+id/current_description_et"
-            android:layout_width="363dp"
-            android:layout_height="450dp"
+            android:layout_width="0dp"
+            android:layout_height="250dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="145dp"
+            android:alpha="0.8"
             android:background="@drawable/custom_input"
             android:ems="10"
             android:gravity="top|start"
@@ -100,6 +109,7 @@
             android:paddingEnd="24dp"
             android:text="@{args.currentItem.description}"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.58"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/current_date_et" />
 

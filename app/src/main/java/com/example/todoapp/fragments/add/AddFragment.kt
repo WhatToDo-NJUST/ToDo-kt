@@ -5,11 +5,11 @@ import android.app.*
 import android.content.Context
 import android.content.Context.ALARM_SERVICE
 import android.content.Intent
+import android.icu.text.SimpleDateFormat
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Toast
-import androidx.core.content.ContextCompat.getSystemService
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -18,9 +18,8 @@ import com.example.todoapp.data.models.ToDoData
 import com.example.todoapp.data.viewmodel.ToDoViewModel
 import com.example.todoapp.databinding.FragmentAddBinding
 import com.example.todoapp.fragments.SharedViewModel
-import java.util.*
-import com.example.todoapp.MainActivity
 import com.example.todoapp.utils.AlarmReceiver
+import java.util.*
 
 class AddFragment : Fragment() {
 
@@ -114,6 +113,13 @@ override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         val alarmManager = mContext?.getSystemService(ALARM_SERVICE) as AlarmManager
         val intent = Intent(activity, AlarmReceiver::class.java)
         val pendingIntent = PendingIntent.getBroadcast(activity, 0, intent, 0)
+
+        val time=binding.dateEt.text.toString()+" "+binding.timeEt.text.toString()
+
+        val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+        val date: Date = formatter.parse(time)
+        calendar.time = date
+
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -148,6 +154,8 @@ override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
                 mTime,
             )
             mToDoViewModel.insertData(newData)
+
+
 
 
 

@@ -19,9 +19,13 @@
     <color name="lightGray">#E68787</color>
     <color name="darkGray">#4B4B4B</color>
     <color name="red">#FF4646</color>
-    <color name="yellow">#FFC114</color>
+    <color name="yellow">#B56618</color>
     <color name="green">#00C980</color>
     <color name="item_background">#EBC5B6</color>
+
+    <color name="brown">#B06611</color>
+    <color name="light_yellow">#F7E89A</color>
+    <color name="golden">#F7E03A</color>
 
     <color name="f0">#D5D5D5</color>
     <color name="f1">#C4FFD2</color>

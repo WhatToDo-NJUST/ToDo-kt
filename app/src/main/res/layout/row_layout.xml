@@ -32,23 +32,22 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/priority_indicator"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:layout_marginEnd="16dp"
                 android:parsePriorityColor="@{toDoData.priority}"
                 app:cardBackgroundColor="@color/red"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.295" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/title_txt"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="40dp"
+                android:layout_marginStart="50dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginEnd="80dp"
+                android:layout_marginEnd="120dp"
                 android:text="@{toDoData.title}"
                 android:textColor="@color/darkGray"
                 android:textSize="20sp"
@@ -63,7 +62,7 @@
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="50dp"
+                android:layout_marginEnd="40dp"
                 android:layout_marginBottom="16dp"
                 android:maxLength="300"
                 android:maxLines="10"
@@ -89,15 +88,15 @@
                 android:id="@+id/time_txt"
                 android:layout_width="90dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="28dp"
+                android:layout_marginEnd="38dp"
                 android:text="@{toDoData.registerTime}"
                 android:textColor="@color/black"
-                android:textSize="12sp"
+                android:textSize="15sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.771" />
+                app:layout_constraintVertical_bias="0.75" />
             <!--                android:parseViewTime="@{toDoData.registerTime}"-->
 
 

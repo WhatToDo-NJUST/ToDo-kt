@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/listFragment"
         android:name="com.example.todoapp.fragments.list.ListFragment"
-        android:label="ToDo List"
+        android:label="What ToDo"
         tools:layout="@layout/fragment_list" >
         <action
             android:id="@+id/action_listFragment_to_addFragment"
@@ -41,7 +41,7 @@
     <fragment
         android:id="@+id/addFragment"
         android:name="com.example.todoapp.fragments.add.AddFragment"
-        android:label="Add"
+        android:label="新增项目"
         tools:layout="@layout/fragment_add" >
         <action
             android:id="@+id/action_addFragment_to_listFragment"
@@ -55,7 +55,7 @@
     <fragment
         android:id="@+id/updateFragment"
         android:name="com.example.todoapp.fragments.update.UpdateFragment"
-        android:label="Update"
+        android:label="修改项目"
         tools:layout="@layout/fragment_update" >
         <action
             android:id="@+id/action_updateFragment_to_listFragment"
@@ -71,7 +71,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:label="Login"
+        android:label="用户登录"
         android:name="com.example.todoapp.fragments.login.LoginFragment"
         tools:layout="@layout/fragment_login">
         <action
@@ -92,7 +92,7 @@
     </fragment>
     <fragment
         android:id="@+id/signFragment"
-        android:label="Sign"
+        android:label="用户注册"
         android:name="com.example.todoapp.fragments.sign.SignFragment"
         tools:layout="@layout/fragment_sign">
         <action
@@ -106,7 +106,7 @@
     <fragment
         android:id="@+id/countDownFragment"
         android:name="com.example.todoapp.fragments.countdown.CountDownFragment"
-        android:label="@string/count_down"
+        android:label="自律定时器"
         tools:layout="@layout/fragment_count_down" >
         <action
             android:id="@+id/action_countDownFragment_to_listFragment"
