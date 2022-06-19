@@ -40,7 +40,8 @@
     <string name="login_failed">"Login failed"</string>
     <string name="login">login</string>
     <string name="login_title">ToDoApp</string>
-    <string name="exit">exit</string>
+    <string name="exit">logout</string>
     <string name="data">data</string>
     <string name="date">date</string>
+    <string name="sortByTime">time</string>
 </resources>

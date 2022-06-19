@@ -146,6 +146,7 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
             R.id.menu_delete_all -> confirmRemoval()
             R.id.menu_priority_high -> mToDoViewModel.sortByHighPriority.observe(viewLifecycleOwner, { adapter.setData(it) })
             R.id.menu_priority_low -> mToDoViewModel.sortByLowPriority.observe(viewLifecycleOwner, { adapter.setData(it) })
+            R.id.menu_sortByTime ->mToDoViewModel.sortByTime.observe(viewLifecycleOwner,{adapter.setData(it)})
             R.id.menu_download_plan-> download()
             R.id.menu_upload_plan->upload()
             R.id.menu_login->findNavController().navigate(R.id.action_listFragment_to_loginFragment)

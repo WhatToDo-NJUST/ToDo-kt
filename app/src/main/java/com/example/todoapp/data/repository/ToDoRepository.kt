@@ -9,6 +9,7 @@ class ToDoRepository(private val toDoDao: ToDoDao) {
     val getAllData: LiveData<List<ToDoData>> = toDoDao.getAllData()
     val sortByHighPriority: LiveData<List<ToDoData>> = toDoDao.sortByHighPriority()
     val sortByLowPriority: LiveData<List<ToDoData>> = toDoDao.sortByLowPriority()
+    val sortByTime: LiveData<List<ToDoData>> = toDoDao.sortByTime()
 
     suspend fun getAllStaticData(): List<ToDoData> {
         return toDoDao.getAllStaticData()
