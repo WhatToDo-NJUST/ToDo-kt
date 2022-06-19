@@ -103,7 +103,7 @@
     <fragment
         android:id="@+id/countDownFragment"
         android:name="com.example.todoapp.fragments.countdown.CountDownFragment"
-        android:label="fragment_count_down"
+        android:label="@string/count_down"
         tools:layout="@layout/fragment_count_down" >
         <action
             android:id="@+id/action_countDownFragment_to_listFragment"
