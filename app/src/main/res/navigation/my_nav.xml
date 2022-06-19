@@ -34,6 +34,9 @@
         <action
             android:id="@+id/action_listFragment_to_countDownFragment"
             app:destination="@id/countDownFragment" />
+        <action
+            android:id="@+id/action_listFragment_to_recordFragment"
+            app:destination="@id/recordFragment" />
     </fragment>
     <fragment
         android:id="@+id/addFragment"
@@ -107,6 +110,16 @@
         tools:layout="@layout/fragment_count_down" >
         <action
             android:id="@+id/action_countDownFragment_to_listFragment"
+            app:destination="@id/listFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/recordFragment"
+        android:name="com.example.todoapp.fragments.record.RecordFragment"
+        android:label="计划热力图"
+        tools:layout="@layout/fragment_record" >
+        <action
+            android:id="@+id/action_recordFragment_to_listFragment"
             app:destination="@id/listFragment" />
     </fragment>
 </navigation>

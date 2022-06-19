@@ -10,6 +10,10 @@ class ToDoRepository(private val toDoDao: ToDoDao) {
     val sortByHighPriority: LiveData<List<ToDoData>> = toDoDao.sortByHighPriority()
     val sortByLowPriority: LiveData<List<ToDoData>> = toDoDao.sortByLowPriority()
 
+    suspend fun getAllStaticData(): List<ToDoData> {
+        return toDoDao.getAllStaticData()
+    }
+
     fun getAllDataByDate(date:String):LiveData<List<ToDoData>>{
         return toDoDao.getAllDataByDate(date)
     }

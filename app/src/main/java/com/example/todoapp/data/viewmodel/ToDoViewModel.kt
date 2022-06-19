@@ -1,6 +1,9 @@
 package com.example.todoapp.data.viewmodel
 
 import android.app.Application
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
@@ -25,6 +28,18 @@ class ToDoViewModel(application: Application) : AndroidViewModel(application) {
     val getAllData: LiveData<List<ToDoData>> = repository.getAllData
     val sortByHighPriority: LiveData<List<ToDoData>> = repository.sortByHighPriority
     val sortByLowPriority: LiveData<List<ToDoData>> = repository.sortByLowPriority
+
+    var toDodataList by mutableStateOf<List<ToDoData>?>(null)
+
+    init {
+        viewModelScope.launch {
+            toDodataList = getToDoDataList()
+        }
+    }
+
+    private suspend fun getToDoDataList() : List<ToDoData>? {
+        return repository.getAllStaticData()
+    }
 
 
     fun getAllDataByDate(date:String) :LiveData<List<ToDoData>>{

@@ -51,4 +51,8 @@
         android:id="@+id/menu_exit"
         android:title="@string/exit"
         app:showAsAction="never"/>
+    <item
+        android:id="@+id/menu_grid"
+        android:title="Grid"
+        app:showAsAction="never"/>
 </menu>

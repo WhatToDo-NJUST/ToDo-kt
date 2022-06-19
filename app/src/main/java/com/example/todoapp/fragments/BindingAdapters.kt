@@ -98,16 +98,23 @@ class BindingAdapters {
             }
         }
 
-//        只能用在floatingactionbutton类型上的Button
-//        @BindingAdapter("android:navigateToSignFragment")
-//        @JvmStatic
-//        fun navigateToSignFragment(view: Button, navigate: Boolean){
-//            view.setOnClickListener {
-//                if(navigate){
-//                    view.findNavController().navigate(R.id.action_loginFragment_to_signFragment)
-//                }
-//            }
-//        }
+        @BindingAdapter("android:parseFrequencyColor")
+        @JvmStatic
+        fun parseFrequencyColor(cardView: CardView, frequency: Int){
+            if(frequency == -1) {
+                cardView.setCardBackgroundColor(cardView.context.getColor(R.color.white))
+            } else if(frequency == 0) {
+                cardView.setCardBackgroundColor(cardView.context.getColor(R.color.f0))
+            } else if(frequency <= 1) {
+                cardView.setCardBackgroundColor(cardView.context.getColor(R.color.f1))
+            } else if(frequency <= 3) {
+                cardView.setCardBackgroundColor(cardView.context.getColor(R.color.f2))
+            } else if(frequency <= 5) {
+                cardView.setCardBackgroundColor(cardView.context.getColor(R.color.f3))
+            } else {
+                cardView.setCardBackgroundColor(cardView.context.getColor(R.color.f4))
+            }
+        }
 
 
     }

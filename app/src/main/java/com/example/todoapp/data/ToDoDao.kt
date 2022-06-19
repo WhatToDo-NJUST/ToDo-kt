@@ -10,6 +10,9 @@ interface ToDoDao {
     @Query("SELECT * FROM todo_table ORDER BY registerTime ASC")
     fun getAllData(): LiveData<List<ToDoData>>
 
+    @Query("SELECT * FROM todo_table ORDER BY id ASC")
+    suspend fun getAllStaticData(): List<ToDoData>
+
     @Query("SELECT * FROM todo_table where registerTime LIKE :date ORDER BY registerTime ASC")
     fun getAllDataByDate(date:String): LiveData<List<ToDoData>>
 

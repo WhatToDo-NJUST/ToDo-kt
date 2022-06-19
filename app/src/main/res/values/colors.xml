@@ -22,4 +22,10 @@
     <color name="yellow">#FFC114</color>
     <color name="green">#00C980</color>
     <color name="item_background">#EBC5B6</color>
+
+    <color name="f0">#D5D5D5</color>
+    <color name="f1">#C4FFD2</color>
+    <color name="f2">#6AFF8C</color>
+    <color name="f3">#00B328</color>
+    <color name="f4">#00370D</color>
 </resources>

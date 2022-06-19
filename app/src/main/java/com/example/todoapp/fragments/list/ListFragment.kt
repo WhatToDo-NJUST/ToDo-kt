@@ -150,6 +150,7 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
             R.id.menu_upload_plan->upload()
             R.id.menu_login->findNavController().navigate(R.id.action_listFragment_to_loginFragment)
             R.id.menu_exit->exit()
+            R.id.menu_grid->findNavController().navigate(R.id.action_listFragment_to_recordFragment)
         }
         return super.onOptionsItemSelected(item)
     }
