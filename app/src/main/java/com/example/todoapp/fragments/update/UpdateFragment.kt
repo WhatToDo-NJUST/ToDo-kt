@@ -43,13 +43,13 @@ class UpdateFragment : Fragment() {
         // Spinner Item Selected Listener
         binding.currentPrioritiesSpinner.onItemSelectedListener = mSharedViewModel.listener
 
-        setDataTimePicker()
+        setDateTimePicker()
 
         return binding.root
     }
 
     @SuppressLint("SetTextI18n")
-    private fun setDataTimePicker() {
+    private fun setDateTimePicker() {
         binding.currentDateEt.setOnClickListener {
             val c = Calendar.getInstance()
             val year = c.get(Calendar.YEAR)

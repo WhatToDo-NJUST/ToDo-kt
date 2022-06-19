@@ -45,14 +45,14 @@ class AddFragment : Fragment() {
         // Spinner Item Selected Listener
         binding.prioritiesSpinner.onItemSelectedListener = mSharedViewModel.listener
 
-        setDataTimePicker()
+        setDateTimePicker()
 
         return binding.root
     }
 
     //    自定义函数
     @SuppressLint("SetTextI18n")
-    private fun setDataTimePicker() {
+    private fun setDateTimePicker() {
         binding.dateEt.setOnClickListener {
             val c = Calendar.getInstance()
             val year = c.get(Calendar.YEAR)

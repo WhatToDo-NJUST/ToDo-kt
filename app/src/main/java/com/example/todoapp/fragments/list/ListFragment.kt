@@ -1,7 +1,10 @@
 package com.example.todoapp.fragments.list
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Application
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -68,17 +71,27 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
         setupRecyclerview()
 
         // Observe LiveData
+
+
         mToDoViewModel.getAllData.observe(viewLifecycleOwner) { data ->
             mSharedViewModel.checkIfDatabaseEmpty(data)
             adapter.setData(data)
             binding.recyclerView.scheduleLayoutAnimation()
         }
 
+//        mToDoViewModel.getAllDataByDate(mSharedViewModel.getCurrentData().toString()).observe(viewLifecycleOwner) { data ->
+//            mSharedViewModel.checkIfDatabaseEmpty(data)
+//            adapter.setData(data)
+//            binding.recyclerView.scheduleLayoutAnimation()
+//        }
+
         // Set Menu
         setHasOptionsMenu(true)
 
         // Hide soft keyboard
         hideKeyboard(requireActivity())
+
+        setDateTimePicker()
 
         return binding.root
     }
@@ -299,6 +312,36 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
         val arr = Gson().fromJson(s, clazz)
         return listOf(*arr)//or return Arrays.asList(new Gson().fromJson(s, clazz)); for a one-liner
     }
+
+    @SuppressLint("SetTextI18n")
+    private fun setDateTimePicker() {
+        binding.currentDate.setOnClickListener {
+            val c = Calendar.getInstance()
+            val year = c.get(Calendar.YEAR)
+            val month = c.get(Calendar.MONTH)
+            val day = c.get(Calendar.DAY_OF_MONTH)
+            context?.let { it1 ->
+                DatePickerDialog(it1, { _, year, month, day ->
+                    run {
+                        val format = "${setDateFormat(year, month, day)}"
+                        binding.currentDate.setText(format)
+                    }
+                }, year, month, day).show()
+            }
+        }
+
+
+    }
+
+
+    private fun setDateFormat(year: Int, month: Int, day: Int): String {
+        var month1=(month+1).toString()
+        var day1=day.toString()
+        if(month+1<10) month1="0"+month1
+        if(day<10) day1="0"+day1
+        return "$year-$month1-$day1"
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

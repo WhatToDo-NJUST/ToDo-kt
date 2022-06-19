@@ -7,8 +7,11 @@ import com.example.todoapp.data.models.ToDoData
 @Dao
 interface ToDoDao {
 
-    @Query("SELECT * FROM todo_table ORDER BY id ASC")
+    @Query("SELECT * FROM todo_table ORDER BY registerTime ASC")
     fun getAllData(): LiveData<List<ToDoData>>
+
+    @Query("SELECT * FROM todo_table where registerTime LIKE :date ORDER BY registerTime ASC")
+    fun getAllDataByDate(date:String): LiveData<List<ToDoData>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertData(toDoData: ToDoData)

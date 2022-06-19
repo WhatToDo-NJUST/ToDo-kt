@@ -16,7 +16,7 @@
         tools:context=".fragments.list.ListFragment">
 
         <TextView
-            android:id="@+id/currentData"
+            android:id="@+id/currentDate"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="@{mSharedViewModel.getCurrentData().toString()}"
@@ -30,7 +30,7 @@
             android:layout_height="1dp"
             android:background="#303F9F"
             android:layout_marginTop="2dp"
-            app:layout_constraintTop_toBottomOf="@id/currentData"
+            app:layout_constraintTop_toBottomOf="@id/currentDate"
             app:layout_constraintStart_toStartOf="parent"/>
 
         <androidx.recyclerview.widget.RecyclerView
@@ -45,7 +45,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/currentData" />
+            app:layout_constraintTop_toTopOf="@id/currentDate" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/floatingActionButton"

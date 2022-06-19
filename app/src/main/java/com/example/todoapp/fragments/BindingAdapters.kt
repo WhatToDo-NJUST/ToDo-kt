@@ -4,10 +4,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Button
-import android.widget.CheckBox
-import android.widget.EditText
-import android.widget.Spinner
+import android.widget.*
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
@@ -72,6 +69,13 @@ class BindingAdapters {
         fun parseTime(view: EditText, dateTime: String){
             val date=dateTime.split(" ")
             view.setText(date[1])
+        }
+
+        @BindingAdapter("android:parseViewTime")
+        @JvmStatic
+        fun parseViewTime(view: TextView, dateTime: String){
+            val date=dateTime.split(" ")
+            view.text=date[1]
         }
 
         @BindingAdapter("android:parsePriorityColor")
