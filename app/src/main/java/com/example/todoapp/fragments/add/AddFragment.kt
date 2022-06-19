@@ -1,5 +1,6 @@
 package com.example.todoapp.fragments.add
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -40,29 +41,51 @@ class AddFragment : Fragment() {
         // Spinner Item Selected Listener
         binding.prioritiesSpinner.onItemSelectedListener = mSharedViewModel.listener
 
-        setTimePicker()
+        setDataTimePicker()
 
         return binding.root
     }
 
     //    自定义函数
-    private fun setTimePicker() {
+    @SuppressLint("SetTextI18n")
+    private fun setDataTimePicker() {
 //      时间栏获取焦点时不自动弹出键盘
         binding.timeEt.showSoftInputOnFocus = false
 //        当时间栏获取焦点时弹出时间选择器
         binding.timeEt.setOnFocusChangeListener { v, hasFocus ->
-            binding.timePicker.isVisible = hasFocus
+            binding.dataPicker.isVisible = hasFocus
         }
         binding.timePicker.setIs24HourView(true)
 
+        var data=""
+        var time=""
+        
+        binding.dataPicker.setOnDateChangedListener { view, year, monthOfYear, dayOfMonth ->
+            data=""
+            var month=monthOfYear.toString()
+            var day=dayOfMonth.toString()
+            if(monthOfYear<10) month="0"+monthOfYear.toString()
+            if(dayOfMonth<10) day="0"+dayOfMonth.toString()
+            data="$year-$month-$day"
+
+            binding.dataPicker.isVisible=false
+            binding.timePicker.isVisible=true
+
+
+        }
+
         // 绑定时间选择器
         binding.timePicker.setOnTimeChangedListener { view, hourOfDay, minute ->
-            var hour=""
-            var min=""
+            time=""
+            var hour=hourOfDay.toString()
+            var min= minute.toString()
             if(hourOfDay<10) hour="0"+hourOfDay.toString()
             if(minute<10) min="0"+minute.toString()
             val sec=(0..59).random()
-            binding.timeEt.setText("$hourOfDay:$minute:$sec")
+            time="$hour:$min:$sec"
+
+            binding.timeEt.setText("$data $time")
+            binding.timePicker.isVisible=false
         }
     }
 
@@ -81,9 +104,7 @@ class AddFragment : Fragment() {
         val mTitle = binding.titleEt.text.toString()
         val mPriority = binding.prioritiesSpinner.selectedItem.toString()
         val mDescription = binding.descriptionEt.text.toString()
-        val date=DateTimeFormatter.ofPattern("yyyy-MM-dd").format(LocalDateTime.now()).toString()
-        val mTime = date+" "+ binding.timeEt.text.toString()
-        Log.d("DATA",mTime.toString())
+        val mTime = binding.timeEt.text.toString()
         val userId=
             context?.getSharedPreferences("data", Context.MODE_PRIVATE)?.getInt("userId",0)!!
         val isDone=false

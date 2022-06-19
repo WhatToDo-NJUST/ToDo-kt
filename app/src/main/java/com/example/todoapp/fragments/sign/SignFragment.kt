@@ -39,6 +39,7 @@ class SignFragment : Fragment() {
         val view=inflater.inflate(R.layout.fragment_login, container, false)
         _binding=FragmentSignBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
+        navController= activity?.let { Navigation.findNavController(it, R.id.navHostFragment) }!!
 
 
         viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO){
