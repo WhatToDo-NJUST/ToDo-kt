@@ -1,12 +1,15 @@
 package com.example.todoapp.fragments.add
 
 import android.annotation.SuppressLint
+import android.app.AlarmManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Context.ALARM_SERVICE
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.*
-import android.widget.TimePicker
 import android.widget.Toast
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -16,9 +19,9 @@ import com.example.todoapp.data.models.ToDoData
 import com.example.todoapp.data.viewmodel.ToDoViewModel
 import com.example.todoapp.databinding.FragmentAddBinding
 import com.example.todoapp.fragments.SharedViewModel
-import java.time.LocalDateTime
-import java.time.LocalTime
-import java.time.format.DateTimeFormatter
+import java.util.*
+import com.example.todoapp.MainActivity
+import com.example.todoapp.utils.AlarmReceiver
 
 class AddFragment : Fragment() {
 
@@ -27,6 +30,8 @@ class AddFragment : Fragment() {
 
     private var _binding: FragmentAddBinding? = null
     private val binding get() = _binding!!
+
+    val calendar: Calendar = Calendar.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -77,11 +82,14 @@ class AddFragment : Fragment() {
         // 绑定时间选择器
         binding.timePicker.setOnTimeChangedListener { view, hourOfDay, minute ->
             time=""
+            calendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
+            calendar.set(Calendar.MINUTE, minute)
+            calendar.set(Calendar.SECOND, 0)
             var hour=hourOfDay.toString()
             var min= minute.toString()
             if(hourOfDay<10) hour="0"+hourOfDay.toString()
             if(minute<10) min="0"+minute.toString()
-            val sec=(0..59).random()
+            val sec = 0
             time="$hour:$min:$sec"
 
             binding.timeEt.setText("$data $time")
@@ -92,10 +100,17 @@ class AddFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.add_fragment_menu, menu)
     }
-
+    private fun startAlarm(calendar: Calendar) {
+        val mContext = activity?.applicationContext
+        val alarmManager = mContext?.getSystemService(ALARM_SERVICE) as AlarmManager
+        val intent = Intent(activity, AlarmReceiver::class.java)
+        val pendingIntent = PendingIntent.getBroadcast(activity, 0, intent, 0)
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
+    }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.menu_add) {
             insertDataToDb()
+            startAlarm(calendar = calendar)
         }
         return super.onOptionsItemSelected(item)
     }
@@ -124,6 +139,9 @@ class AddFragment : Fragment() {
                 mTime,
             )
             mToDoViewModel.insertData(newData)
+
+
+
             Toast.makeText(requireContext(), "Successfully added!", Toast.LENGTH_SHORT).show()
             // Navigate Back
             findNavController().navigate(R.id.action_addFragment_to_listFragment)
