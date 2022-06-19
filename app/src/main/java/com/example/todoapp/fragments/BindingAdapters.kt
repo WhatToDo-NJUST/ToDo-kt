@@ -6,6 +6,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.CheckBox
+import android.widget.EditText
 import android.widget.Spinner
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -58,6 +59,21 @@ class BindingAdapters {
                 Priority.LOW -> { view.setSelection(2) }
             }
         }
+
+        @BindingAdapter("android:parseDate")
+        @JvmStatic
+        fun parseDate(view: EditText, dateTime: String){
+            val date=dateTime.split(" ")
+            view.setText(date[0])
+        }
+
+        @BindingAdapter("android:parseTime")
+        @JvmStatic
+        fun parseTime(view: EditText, dateTime: String){
+            val date=dateTime.split(" ")
+            view.setText(date[1])
+        }
+
         @BindingAdapter("android:parsePriorityColor")
         @JvmStatic
         fun parsePriorityColor(cardView: CardView, priority: Priority){

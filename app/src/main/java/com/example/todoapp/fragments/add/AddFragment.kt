@@ -1,8 +1,7 @@
 package com.example.todoapp.fragments.add
 
 import android.annotation.SuppressLint
-import android.app.AlarmManager
-import android.app.PendingIntent
+import android.app.*
 import android.content.Context
 import android.content.Context.ALARM_SERVICE
 import android.content.Intent
@@ -54,50 +53,60 @@ class AddFragment : Fragment() {
     //    自定义函数
     @SuppressLint("SetTextI18n")
     private fun setDataTimePicker() {
-//      时间栏获取焦点时不自动弹出键盘
-        binding.timeEt.showSoftInputOnFocus = false
-//        当时间栏获取焦点时弹出时间选择器
-        binding.timeEt.setOnFocusChangeListener { v, hasFocus ->
-            binding.dataPicker.isVisible = hasFocus
-        }
-        binding.timePicker.setIs24HourView(true)
-
-        var data=""
-        var time=""
-        
-        binding.dataPicker.setOnDateChangedListener { view, year, monthOfYear, dayOfMonth ->
-            data=""
-            var month=monthOfYear.toString()
-            var day=dayOfMonth.toString()
-            if(monthOfYear<10) month="0"+monthOfYear.toString()
-            if(dayOfMonth<10) day="0"+dayOfMonth.toString()
-            data="$year-$month-$day"
-
-            binding.dataPicker.isVisible=false
-            binding.timePicker.isVisible=true
-
-
+        binding.dateEt.setOnClickListener {
+            val c = Calendar.getInstance()
+            val year = c.get(Calendar.YEAR)
+            val month = c.get(Calendar.MONTH)
+            val day = c.get(Calendar.DAY_OF_MONTH)
+            context?.let { it1 ->
+                DatePickerDialog(it1, { _, year, month, day ->
+                    run {
+                        val format = "${setDateFormat(year, month, day)}"
+                        binding.dateEt.setText(format)
+                    }
+                }, year, month, day).show()
+            }
         }
 
-        // 绑定时间选择器
-        binding.timePicker.setOnTimeChangedListener { view, hourOfDay, minute ->
-            time=""
-            calendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
-            calendar.set(Calendar.MINUTE, minute)
-            calendar.set(Calendar.SECOND, 0)
-            var hour=hourOfDay.toString()
-            var min= minute.toString()
-            if(hourOfDay<10) hour="0"+hourOfDay.toString()
-            if(minute<10) min="0"+minute.toString()
-            val sec = 0
-            time="$hour:$min:$sec"
+        binding.timeEt.setOnClickListener {
+            val ca = Calendar.getInstance()
+            var mHour = ca[Calendar.HOUR_OF_DAY]
+            var mMinute = ca[Calendar.MINUTE]
 
-            binding.timeEt.setText("$data $time")
-            binding.timePicker.isVisible=false
+            val timePickerDialog = TimePickerDialog(
+                context,
+                TimePickerDialog.OnTimeSetListener{_, hourOfDay, minute ->
+                    mHour   = hourOfDay
+                    mMinute = minute
+                    val mTime = "${setTimeFormat(hourOfDay,minute)}"
+                    binding.timeEt.setText(mTime)
+                },
+                mHour, mMinute, true
+            )
+            timePickerDialog.show()
         }
+
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+
+private fun setTimeFormat(hour: Int,min:Int):String{
+    var hour1=hour.toString()
+    var min1=min.toString()
+    if(hour<10) hour1="0"+hour1
+    if(min<10) min1="0"+min1
+    val sec=(10..59).random()
+    return "$hour1:$min1:$sec"
+}
+
+private fun setDateFormat(year: Int, month: Int, day: Int): String {
+    var month1=(month+1).toString()
+    var day1=day.toString()
+    if(month+1<10) month1="0"+month1
+    if(day<10) day1="0"+day1
+    return "$year-$month1-$day1"
+}
+
+override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.add_fragment_menu, menu)
     }
     private fun startAlarm(calendar: Calendar) {
@@ -119,7 +128,7 @@ class AddFragment : Fragment() {
         val mTitle = binding.titleEt.text.toString()
         val mPriority = binding.prioritiesSpinner.selectedItem.toString()
         val mDescription = binding.descriptionEt.text.toString()
-        val mTime = binding.timeEt.text.toString()
+        val mTime = binding.dateEt.text.toString()+" "+binding.timeEt.text.toString()
         val userId=
             context?.getSharedPreferences("data", Context.MODE_PRIVATE)?.getInt("userId",0)!!
         val isDone=false

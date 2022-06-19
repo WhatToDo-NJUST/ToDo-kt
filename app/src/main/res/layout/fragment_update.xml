@@ -48,18 +48,40 @@
             app:layout_constraintTop_toBottomOf="@+id/current_title_et" />
 
         <EditText
-            android:id="@+id/current_time_et"
-            android:layout_width="363dp"
+            android:id="@+id/current_date_et"
+            android:layout_width="160dp"
             android:layout_height="60dp"
-            android:layout_marginTop="16dp"
-            android:ems="10"
+            android:layout_marginTop="20dp"
             android:background="@drawable/custom_input"
-            android:hint="@string/time"
-            android:inputType="time"
+            android:ems="10"
+            android:hint="@string/date"
             android:paddingStart="24dp"
             android:paddingEnd="24dp"
-            android:text="@{args.currentItem.registerTime}"
+            android:parseDate="@{args.currentItem.registerTime}"
+            android:inputType="none"
+            android:focusable="false"
+            android:cursorVisible="true"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.003"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/current_priorities_spinner" />
+
+        <EditText
+            android:id="@+id/current_time_et"
+            android:layout_width="160dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/custom_input"
+            android:ems="10"
+            android:hint="@string/time"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            android:parseTime="@{args.currentItem.registerTime}"
+            android:inputType="none"
+            android:focusable="false"
+            android:cursorVisible="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.984"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/current_priorities_spinner" />
 
@@ -79,7 +101,9 @@
             android:text="@{args.currentItem.description}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/current_time_et" />
+            app:layout_constraintTop_toBottomOf="@+id/current_date_et" />
+
+
 
         <TimePicker
             android:id="@+id/update_time_picker"

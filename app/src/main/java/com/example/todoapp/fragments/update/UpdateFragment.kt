@@ -1,6 +1,9 @@
 package com.example.todoapp.fragments.update
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
@@ -14,6 +17,7 @@ import com.example.todoapp.data.models.ToDoData
 import com.example.todoapp.data.viewmodel.ToDoViewModel
 import com.example.todoapp.databinding.FragmentUpdateBinding
 import com.example.todoapp.fragments.SharedViewModel
+import java.util.*
 
 class UpdateFragment : Fragment() {
 
@@ -39,28 +43,64 @@ class UpdateFragment : Fragment() {
         // Spinner Item Selected Listener
         binding.currentPrioritiesSpinner.onItemSelectedListener = mSharedViewModel.listener
 
-        setTimePicker()
+        setDataTimePicker()
 
         return binding.root
     }
 
-    private fun setTimePicker() {
-//      时间栏获取焦点时不自动弹出键盘
-        binding.currentTimeEt.showSoftInputOnFocus = false
-//        当时间栏获取焦点时弹出时间选择器
-        binding.currentTimeEt.setOnFocusChangeListener { v, hasFocus ->
-            binding.updateTimePicker.isVisible = hasFocus
+    @SuppressLint("SetTextI18n")
+    private fun setDataTimePicker() {
+        binding.currentDateEt.setOnClickListener {
+            val c = Calendar.getInstance()
+            val year = c.get(Calendar.YEAR)
+            val month = c.get(Calendar.MONTH)
+            val day = c.get(Calendar.DAY_OF_MONTH)
+            context?.let { it1 ->
+                DatePickerDialog(it1, { _, year, month, day ->
+                    run {
+                        val format = "${setDateFormat(year, month, day)}"
+                        binding.currentDateEt.setText(format)
+                    }
+                }, year, month, day).show()
+            }
         }
 
-        // 绑定时间选择器
-        binding.updateTimePicker.setOnTimeChangedListener { view, hourOfDay, minute ->
-//            Toast.makeText(
-//                context,
-//                "您选择的时间是：" + hourOfDay + "时" + minute + "分!",
-//                Toast.LENGTH_SHORT
-//            ).show()
-            binding.currentTimeEt.setText("$hourOfDay:$minute")
+        binding.currentTimeEt.setOnClickListener {
+            val ca = Calendar.getInstance()
+            var mHour = ca[Calendar.HOUR_OF_DAY]
+            var mMinute = ca[Calendar.MINUTE]
+
+            val timePickerDialog = TimePickerDialog(
+                context,
+                TimePickerDialog.OnTimeSetListener{ _, hourOfDay, minute ->
+                    mHour   = hourOfDay
+                    mMinute = minute
+                    val mTime = "${setTimeFormat(hourOfDay,minute)}"
+                    binding.currentTimeEt.setText(mTime)
+                },
+                mHour, mMinute, true
+            )
+            timePickerDialog.show()
         }
+
+    }
+
+
+    private fun setTimeFormat(hour: Int,min:Int):String{
+        var hour1=hour.toString()
+        var min1=min.toString()
+        if(hour<10) hour1="0"+hour1
+        if(min<10) min1="0"+min1
+        val sec=(10..59).random()
+        return "$hour1:$min1:$sec"
+    }
+
+    private fun setDateFormat(year: Int, month: Int, day: Int): String {
+        var month1=(month+1).toString()
+        var day1=day.toString()
+        if(month+1<10) month1="0"+month1
+        if(day<10) day1="0"+day1
+        return "$year-$month1-$day1"
     }
 
 
@@ -80,7 +120,7 @@ class UpdateFragment : Fragment() {
         val title = binding.currentTitleEt.text.toString()
         val description = binding.currentDescriptionEt.text.toString()
         val getPriority = binding.currentPrioritiesSpinner.selectedItem.toString()
-        val time=binding.currentTimeEt.text.toString()
+        val time=binding.currentDateEt.text.toString()+" "+binding.currentTimeEt.text.toString()
         val id=args.currentItem.id
         val userId=args.currentItem.userId
 

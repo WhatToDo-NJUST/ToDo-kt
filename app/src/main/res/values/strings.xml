@@ -41,4 +41,6 @@
     <string name="login">login</string>
     <string name="login_title">ToDoApp</string>
     <string name="exit">exit</string>
+    <string name="data">data</string>
+    <string name="date">date</string>
 </resources>
