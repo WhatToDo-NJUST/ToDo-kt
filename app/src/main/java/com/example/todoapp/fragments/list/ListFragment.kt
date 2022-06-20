@@ -247,7 +247,7 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
 
         val lists=stringToArray(data.toString(), Array<ToDoData>::class.java)
         lists?.let { adapter.setData(it) }
-
+        mSharedViewModel.emptyDatabase.value=false
     }
 
 
@@ -278,8 +278,10 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
 
         for(i in lists?.indices!!){
             val jo=JsonObject()
+            val shp= context?.getSharedPreferences("data", MODE_PRIVATE)!!
+            val userId=shp.getInt("userId",lists[i].userId)
             jo.addProperty("id",lists[i].id)
-            jo.addProperty("userId",lists[i].userId)
+            jo.addProperty("userId",userId)
             jo.addProperty("title",lists[i].title)
             jo.addProperty("priority",lists[i].priority.toString())
             jo.addProperty("description",lists[i].description)
