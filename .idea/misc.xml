@@ -32,8 +32,9 @@
         <entry key="..\:/Users/wql/Desktop/android/ToDo-kt/app/src/main/res/drawable/ic_sortby.xml" value="0.1795" />
         <entry key="..\:/Users/wql/Desktop/android/ToDo-kt/app/src/main/res/drawable/item_background.xml" value="0.211" />
         <entry key="..\:/Users/wql/Desktop/android/ToDo-kt/app/src/main/res/drawable/translucent_button.xml" value="0.1295" />
-        <entry key="..\:/Users/wql/Desktop/android/ToDo-kt/app/src/main/res/layout/fragment_add.xml" value="0.1" />
-        <entry key="..\:/Users/wql/Desktop/android/ToDo-kt/app/src/main/res/layout/fragment_list.xml" value="0.1" />
+        <entry key="..\:/Users/wql/Desktop/android/ToDo-kt/app/src/main/res/layout/activity_main.xml" value="0.20364583333333333" />
+        <entry key="..\:/Users/wql/Desktop/android/ToDo-kt/app/src/main/res/layout/fragment_add.xml" value="0.22" />
+        <entry key="..\:/Users/wql/Desktop/android/ToDo-kt/app/src/main/res/layout/fragment_list.xml" value="0.25" />
         <entry key="..\:/Users/wql/Desktop/android/ToDo-kt/app/src/main/res/layout/fragment_login.xml" value="0.19722222222222222" />
         <entry key="..\:/Users/wql/Desktop/android/ToDo-kt/app/src/main/res/layout/fragment_sign.xml" value="0.20364583333333333" />
         <entry key="..\:/Users/wql/Desktop/android/ToDo-kt/app/src/main/res/layout/fragment_update.xml" value="0.33" />

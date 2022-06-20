@@ -62,16 +62,11 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
     ): View {
         val view =  inflater.inflate(R.layout.fragment_list, container, false)
 
-        // Data binding
         _binding = FragmentListBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.mSharedViewModel = mSharedViewModel
 
-        // Setup RecyclerView
         setupRecyclerview()
-
-        // Observe LiveData
-
 
         mToDoViewModel.getAllData.observe(viewLifecycleOwner) { data ->
             mSharedViewModel.checkIfDatabaseEmpty(data)
@@ -85,10 +80,8 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
 //            binding.recyclerView.scheduleLayoutAnimation()
 //        }
 
-        // Set Menu
         setHasOptionsMenu(true)
 
-        // Hide soft keyboard
         hideKeyboard(requireActivity())
 
         setDateTimePicker()
@@ -102,7 +95,6 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
 
-        // Swipe to Delete
         swipeToDelete(recyclerView)
     }
 
@@ -183,7 +175,7 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
         })
     }
 
-    // Show AlertDialog to Confirm Removal of All Items from Database Table
+
     private fun confirmRemoval() {
         val builder=makeAlertDialog("Successfully Removed Everything!","Delete everything?",
             "Are you sure you want to remove everything?"
@@ -304,7 +296,6 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
             .post(requestBody)
             .build()
 
-        //创建call并调用enqueue()方法实现网络请求
 
         val res=makeRequest(request)
         if (res == "error") {
